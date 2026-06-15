@@ -1,1 +1,1 @@
-# lung-cancer-detection-ai
+# lung-cancer-detection-AI
