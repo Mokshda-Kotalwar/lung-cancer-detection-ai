@@ -333,12 +333,12 @@ ds.remove_private_tags()
 
 ### Common Issues
 
-| Issue | Solution |
-|-------|----------|
-| CUDA out of memory | Reduce `batch_size` in config |
-| Slow inference | Enable GPU, use smaller image size |
-| Model not found | Check internet, restart app |
-| DICOM read error | Install pydicom: `pip install pydicom` |
+| Issue              | Solution                               |
+|--------------------|----------------------------------------|
+| CUDA out of memory | Reduce `batch_size` in config          |
+| Slow inference     | Enable GPU, use smaller image size     |
+| Model not found    | Check internet, restart app            |
+| DICOM read error   | Install pydicom: `pip install pydicom` |
 
 For more help, see [SETUP.md](docs/SETUP.md#-troubleshooting).
 
