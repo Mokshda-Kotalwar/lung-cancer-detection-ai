@@ -53,22 +53,50 @@ A comprehensive, production-ready AI system for analyzing medical images and ass
 ## 🏗️ Architecture
 
 ### Modular Design
-```
-Image Input
-    ↓
-Preprocessing (Normalization, Segmentation, Augmentation)
-    ↓
-Detection (YOLOv8 - Nodule Localization)
-    ↓
-Classification (EfficientNet - Malignancy Assessment)
-    ↓
-Explainability (Grad-CAM - Visual Interpretation)
-    ↓
-Risk Assessment (Multi-factor Scoring & UQ)
-    ↓
-Recommendations (Clinical Decision Support)
-    ↓
-Report Generation (PDF/HTML Export)
+                CT Scan Image
+                       │
+                       ▼
+                Image Preprocessing
+                       │
+                       ▼
+                Lung Segmentation
+                   (3D U-Net)
+                       │
+                       ▼
+                 Nodule Detection
+                     (YOLOv8)
+                       │
+                       ▼
+               Feature Extraction
+               (DenseNet/ViT)
+                       │
+                       ▼
+                  Classification
+                       │
+         ┌─────────────┴─────────────┐
+         ▼                           ▼
+     Prediction                 Confidence
+         │                           │
+         └─────────────┬─────────────┘
+                       ▼
+                  Grad-CAM
+                       │
+                       ▼
+                FastAPI Backend
+                       │
+                       ▼
+               Streamlit Dashboard
+                       │
+          ┌────────────┼────────────┐
+          ▼            ▼            ▼
+      Upload       Reports      History
+                       │
+                       ▼
+                   Database
+                (MongoDB Atlas)
+                       │
+                       ▼
+                  Cloud Deployment
 ```
 
 ### Core Modules
