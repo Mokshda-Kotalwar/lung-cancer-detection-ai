@@ -1,0 +1,93 @@
+{
+    "model": {
+        "yolo_model": "yolov8m",
+        "yolo_pretrained": true,
+        "yolo_device": "cuda",
+        "yolo_conf_threshold": 0.45,
+        "yolo_iou_threshold": 0.5,
+        "efficientnet_version": "efficientnet-b4",
+        "efficientnet_pretrained": true,
+        "num_classes": 3,
+        "input_size": 512,
+        "batch_size": 16,
+        "num_workers": 4,
+        "learning_rate": 0.0001,
+        "epochs": 50,
+        "early_stopping_patience": 10,
+        "val_split": 0.2,
+        "test_split": 0.1,
+        "apply_augmentation": true,
+        "rotation_range": 20,
+        "brightness_range": [
+            0.8,
+            1.2
+        ]
+    },
+    "preprocessing": {
+        "normalize_method": "minmax",
+        "window_center": 40,
+        "window_width": 400,
+        "target_size": 512,
+        "interpolation": "bilinear",
+        "preserve_aspect_ratio": true,
+        "remove_patient_tags": true,
+        "handle_missing_values": true,
+        "denoise": true,
+        "denoise_sigma": 1.0,
+        "use_lung_mask": true,
+        "lung_threshold": -400,
+        "connectivity": 2
+    },
+    "explainability": {
+        "use_gradcam": true,
+        "target_layer": "layer4",
+        "colormap": "jet",
+        "alpha": 0.4,
+        "use_lime": false,
+        "num_samples": 1000,
+        "use_shap": false
+    },
+    "risk": {
+        "risk_threshold_low": 0.3,
+        "risk_threshold_high": 0.7,
+        "use_clinical_features": true,
+        "clinical_feature_weight": 0.2,
+        "compute_uncertainty": true,
+        "monte_carlo_iterations": 10,
+        "recommendation_model": "rule_based"
+    },
+    "report": {
+        "report_format": "pdf",
+        "include_recommendations": true,
+        "include_visualizations": true,
+        "pdf_font_size": 12,
+        "pdf_margin": 20,
+        "pdf_page_size": "A4",
+        "include_clinical_summary": true,
+        "include_risk_score": true,
+        "include_gradcam": true,
+        "include_differential_diagnosis": true,
+        "include_next_steps": true
+    },
+    "web": {
+        "server_port": 8501,
+        "server_host": "0.0.0.0",
+        "max_upload_size_mb": 100,
+        "theme": "dark",
+        "display_fps": false,
+        "upload_dir": "C:\\Users\\Admin\\Documents\\lung-cancer-detection-ai\\outputs\\uploads",
+        "results_dir": "C:\\Users\\Admin\\Documents\\lung-cancer-detection-ai\\outputs\\results"
+    },
+    "system": {
+        "log_level": "INFO",
+        "log_file": "C:\\Users\\Admin\\Documents\\lung-cancer-detection-ai\\logs\\system.log",
+        "enable_cache": true,
+        "cache_dir": "C:\\Users\\Admin\\Documents\\lung-cancer-detection-ai\\cache",
+        "device": "cuda",
+        "use_mixed_precision": true,
+        "random_seed": 42,
+        "deterministic": true,
+        "num_workers": 4,
+        "batch_size": 16
+    }
+}

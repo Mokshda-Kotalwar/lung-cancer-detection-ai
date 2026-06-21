@@ -1,7 +1,6 @@
 # Core Dependencies
 torch==2.0.1
 torchvision==0.15.2
-torch-cuda-version==11.8
 
 # Computer Vision
 opencv-python==4.8.1.78
@@ -15,7 +14,7 @@ simpleitk==2.2.1
 
 # AI/ML Models
 ultralytics==8.0.207  # YOLOv8
-timm==0.9.14  # EfficientNet and other models
+timm  # EfficientNet and other models
 efficientnet-pytorch==0.7.1
 
 # Explainability
