@@ -100,13 +100,13 @@ A comprehensive, production-ready AI system for analyzing medical images and ass
 ```
 
 ### Core Modules
-| Module | Purpose | Key Classes |
-|--------|---------|-------------|
-| **preprocessing** | Image processing & normalization | `ImagePreprocessor`, `DICOMProcessor`, `LungSegmentation` |
-| **detection** | Nodule detection & classification | `YOLODetector`, `EfficientNetClassifier`, `EnsembleDetector` |
-| **xai** | Explainable AI visualizations | `GradCAM`, `LayerCAM`, `ExplainabilityEngine` |
-| **risk** | Risk scoring & recommendations | `RiskScorer`, `RecommendationEngine`, `DifferentialDiagnosis` |
-| **reporting** | Report generation | `ReportGenerator` |
+| Module            | Purpose                           | Key Classes |
+|--------           |-----------------------------------|--------------------------------------------------------------|
+| **preprocessing** | Image processing & normalization  | `ImagePreprocessor`, `DICOMProcessor`, `LungSegmentation`    |
+| **detection**     | Nodule detection & classification | `YOLODetector`, `EfficientNetClassifier`, `EnsembleDetector` |
+| **xai**           | Explainable AI visualizations     | `GradCAM`, `LayerCAM`, `ExplainabilityEngine`                |
+| **risk**          | Risk scoring & recommendations    | `RiskScorer`, `RecommendationEngine`, `DifferentialDiagnosis |
+| **reporting**     | Report generation                 | `ReportGenerator`                                            |
 
 ---
 
