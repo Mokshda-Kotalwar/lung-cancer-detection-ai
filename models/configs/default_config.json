@@ -36,7 +36,8 @@
         "denoise_sigma": 1.0,
         "use_lung_mask": true,
         "lung_threshold": -400,
-        "connectivity": 2
+        "connectivity": 2,
+        "rotation_range": 15
     },
     "explainability": {
         "use_gradcam": true,

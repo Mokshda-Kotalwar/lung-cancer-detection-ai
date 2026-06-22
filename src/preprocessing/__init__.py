@@ -240,7 +240,16 @@ class ImagePreprocessor:
         return torch.stack(processed)
 
 
+# Import new dataset and preprocessing pipeline components
+from src.preprocessing.dataset import (
+    MedicalImagePreprocessor,
+    LungNoduleDataset,
+    collate_detection_fn,
+    get_dataloader
+)
+
 if __name__ == "__main__":
     from config import config
     preprocessor = ImagePreprocessor(config)
     print("Preprocessing module loaded successfully")
+

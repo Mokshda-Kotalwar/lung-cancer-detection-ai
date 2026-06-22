@@ -3,3 +3,62 @@
 2026-06-21 16:23:17,733 - src.utils - INFO - Random seed set to 42
 2026-06-21 16:24:19,755 - src.utils - INFO - Random seed set to 42
 2026-06-21 23:17:43,625 - src.utils - INFO - Random seed set to 42
+2026-06-22 20:29:42,685 - src.preprocessing.dataset - WARNING - Albumentations not installed. Please install it using `pip install albumentations`.
+2026-06-22 20:32:09,607 - src.preprocessing.dataset - WARNING - Albumentations not installed. Please install it using `pip install albumentations`.
+2026-06-22 20:33:15,513 - src.preprocessing.dataset - WARNING - Albumentations not installed. Please install it using `pip install albumentations`.
+2026-06-22 20:33:15,610 - src.utils - INFO - Random seed set to 42
+2026-06-22 20:37:09,274 - src.preprocessing.dataset - WARNING - Albumentations not installed. Please install it using `pip install albumentations`.
+2026-06-22 20:37:09,284 - src.utils - INFO - Random seed set to 42
+2026-06-22 20:47:45,580 - src.preprocessing.dataset - WARNING - Albumentations not installed. Please install it using `pip install albumentations`.
+2026-06-22 20:47:46,089 - src.preprocessing - WARNING - pydicom not installed. Install for DICOM support.
+2026-06-22 20:47:46,513 - src.preprocessing - WARNING - pydicom not installed. Install for DICOM support.
+2026-06-22 20:47:46,553 - src.preprocessing - WARNING - pydicom not installed. Install for DICOM support.
+2026-06-22 20:47:46,583 - src.preprocessing - WARNING - pydicom not installed. Install for DICOM support.
+2026-06-22 20:47:46,667 - src.utils - INFO - Random seed set to 42
+2026-06-22 20:47:46,675 - src.utils - INFO - Random seed set to 42
+2026-06-22 20:47:46,835 - src.utils - WARNING - Using CPU device (slow)
+2026-06-22 20:48:19,057 - src.preprocessing.dataset - WARNING - Albumentations not installed. Please install it using `pip install albumentations`.
+2026-06-22 20:48:19,237 - src.preprocessing - WARNING - pydicom not installed. Install for DICOM support.
+2026-06-22 20:48:19,619 - src.preprocessing - WARNING - pydicom not installed. Install for DICOM support.
+2026-06-22 20:48:19,657 - src.preprocessing - WARNING - pydicom not installed. Install for DICOM support.
+2026-06-22 20:48:19,689 - src.preprocessing - WARNING - pydicom not installed. Install for DICOM support.
+2026-06-22 20:48:19,763 - src.utils - INFO - Random seed set to 42
+2026-06-22 20:48:19,768 - src.utils - INFO - Random seed set to 42
+2026-06-22 20:48:19,796 - src.utils - WARNING - Using CPU device (slow)
+2026-06-22 20:49:08,734 - src.preprocessing.dataset - WARNING - Albumentations not installed. Please install it using `pip install albumentations`.
+2026-06-22 20:49:08,919 - src.preprocessing - WARNING - pydicom not installed. Install for DICOM support.
+2026-06-22 20:49:09,258 - src.preprocessing - WARNING - pydicom not installed. Install for DICOM support.
+2026-06-22 20:49:09,305 - src.preprocessing - WARNING - pydicom not installed. Install for DICOM support.
+2026-06-22 20:49:09,341 - src.preprocessing - WARNING - pydicom not installed. Install for DICOM support.
+2026-06-22 20:49:09,394 - src.utils - INFO - Random seed set to 42
+2026-06-22 20:49:09,396 - src.utils - INFO - Random seed set to 42
+2026-06-22 20:49:09,417 - src.utils - WARNING - Using CPU device (slow)
+2026-06-22 20:55:55,799 - src.utils - INFO - Random seed set to 42
+2026-06-22 20:55:55,805 - src.utils - INFO - Random seed set to 42
+2026-06-22 20:55:55,807 - src.utils - WARNING - Using CPU device (slow)
+2026-06-22 20:55:55,864 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 0: Numpy is not available
+2026-06-22 20:56:32,858 - src.utils - INFO - Random seed set to 42
+2026-06-22 20:56:32,859 - src.utils - INFO - Random seed set to 42
+2026-06-22 20:56:32,868 - src.utils - WARNING - Using CPU device (slow)
+2026-06-22 20:56:32,923 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 0: Numpy is not available
+2026-06-22 20:59:07,415 - src.utils - INFO - Random seed set to 42
+2026-06-22 20:59:07,419 - src.utils - INFO - Random seed set to 42
+2026-06-22 20:59:07,435 - src.utils - WARNING - Using CPU device (slow)
+2026-06-22 21:01:58,757 - src.utils - INFO - Random seed set to 42
+2026-06-22 21:02:21,130 - src.detection - ERROR - Error loading YOLOv8: Torch not compiled with CUDA enabled
+2026-06-22 21:02:21,132 - src.detection - ERROR - timm package required. Install: pip install timm
+2026-06-22 21:02:21,133 - src.reporting - ERROR - reportlab not installed. Install: pip install reportlab
+2026-06-22 21:02:21,133 - main - INFO - Pipeline initialized
+2026-06-22 21:02:21,152 - main - INFO - Loading image: /tmp/test_image.png
+2026-06-22 21:02:21,153 - main - ERROR - Error in analysis pipeline: [Errno 2] No such file or directory: '/tmp/test_image.png'
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\lung-cancer-detection-ai\main.py", line 58, in analyze_image
+    image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+  File "c:\Users\Admin\Documents\lung-cancer-detection-ai\venv\lib\site-packages\ultralytics\utils\patches.py", line 25, in imread
+    return cv2.imdecode(np.fromfile(filename, np.uint8), flags)
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/test_image.png'
+2026-06-22 21:02:56,046 - src.utils - INFO - Random seed set to 42
+2026-06-22 21:02:57,168 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 9: x_max is less than or equal to x_min for bbox [0. 0. 0. 0. 0.].
+2026-06-22 21:02:57,193 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 1: x_max is less than or equal to x_min for bbox [0. 0. 0. 0. 0.].
+2026-06-22 21:02:57,887 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 1: x_max is less than or equal to x_min for bbox [0. 0. 0. 0. 0.].
+2026-06-22 21:02:59,425 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 3: x_max is less than or equal to x_min for bbox [0. 0. 0. 0. 0.].

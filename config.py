@@ -70,26 +70,30 @@ class ModelConfig:
 @dataclass
 class PreprocessingConfig:
     """Preprocessing Configuration"""
+
     # DICOM Processing
-    normalize_method: str = "minmax"  # minmax, zscore, clahe
+    normalize_method: str = "minmax"
     window_center: int = 40
     window_width: int = 400
-    
+
     # Image Processing
     target_size: int = 512
     interpolation: str = "bilinear"
     preserve_aspect_ratio: bool = True
-    
+
     # Artifacts Removal
     remove_patient_tags: bool = True
     handle_missing_values: bool = True
     denoise: bool = True
     denoise_sigma: float = 1.0
-    
+
     # Lung Segmentation
     use_lung_mask: bool = True
-    lung_threshold: float = -400  # HU units for lung
+    lung_threshold: float = -400
     connectivity: int = 2
+
+    # Data Augmentation
+    rotation_range: int = 15
 
 
 @dataclass

@@ -122,5 +122,49 @@ class TestGPU:
         assert torch.cuda.is_available()
 
 
+from src.preprocessing import MedicalImagePreprocessor, LungNoduleDataset
+
+class TestNewPreprocessingAndDataset:
+    """Test the newly implemented pipeline and dataset modules"""
+    
+    def test_medical_preprocessor_windowing(self):
+        """Test HU windowing normalization"""
+        preprocessor = MedicalImagePreprocessor(config, is_training=False)
+        raw_ct = np.random.randint(-1000, 1000, (512, 512)).astype(np.float32)
+        windowed = preprocessor.apply_window_level(raw_ct)
+        
+        assert windowed.dtype == np.uint8
+        assert windowed.shape == (512, 512)
+        assert windowed.min() >= 0
+        assert windowed.max() <= 255
+        
+    def test_dataset_loading_pipeline(self):
+        """Test dataset loading pipeline using dummy slice files"""
+        import tempfile
+        preprocessor = MedicalImagePreprocessor(config, is_training=False)
+        
+        with tempfile.TemporaryDirectory() as tmpdir:
+            temp_path = Path(tmpdir)
+            dummy_image_path = temp_path / "dummy_slice.npy"
+            dummy_slice = np.random.randint(-1000, 400, (512, 512)).astype(np.float32)
+            np.save(dummy_image_path, dummy_slice)
+            
+            dataset = LungNoduleDataset(
+                image_paths=[dummy_image_path],
+                labels=[1],
+                bboxes=[[0.5, 0.5, 0.1, 0.1]],
+                config=config,
+                is_training=False
+            )
+            
+            assert len(dataset) == 1
+            sample = dataset[0]
+            assert "image" in sample
+            assert "image_path" in sample
+            assert sample["image"].shape == (3, 512, 512) # duplicated channel dimensions
+            assert sample["label"].item() == 1
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])
+
