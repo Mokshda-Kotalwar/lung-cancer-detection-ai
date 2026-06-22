@@ -62,3 +62,7 @@ FileNotFoundError: [Errno 2] No such file or directory: '/tmp/test_image.png'
 2026-06-22 21:02:57,193 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 1: x_max is less than or equal to x_min for bbox [0. 0. 0. 0. 0.].
 2026-06-22 21:02:57,887 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 1: x_max is less than or equal to x_min for bbox [0. 0. 0. 0. 0.].
 2026-06-22 21:02:59,425 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 3: x_max is less than or equal to x_min for bbox [0. 0. 0. 0. 0.].
+2026-06-22 21:40:16,241 - __main__ - INFO - Class Distribution: {'Normal': 110, 'Benign': 60, 'Malignant': 30}
+2026-06-22 21:40:16,241 - __main__ - INFO - Dataset Balance Index (0-1): 0.887 (1.0 = Perfect Balance)
+2026-06-22 21:46:17,272 - __main__ - INFO - Class Distribution: {'Normal': 110, 'Benign': 60, 'Malignant': 30}
+2026-06-22 21:46:17,274 - __main__ - INFO - Dataset Balance Index (0-1): 0.887 (1.0 = Perfect Balance)
