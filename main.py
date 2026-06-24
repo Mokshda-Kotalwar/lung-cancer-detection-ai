@@ -11,6 +11,8 @@ import numpy as np
 import cv2
 from datetime import datetime
 
+from yaml import parser
+
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent))
 
@@ -178,29 +180,25 @@ Examples:
         action="store_true",
         help="Skip report generation"
     )
-    
+    # Parse arguments
     args = parser.parse_args()
-    
-    # Setup logging
-    setup_logging(level=args.log_level)
-    set_seed(config.system.random_seed)
-    
-    # Web interface
+
     if args.web:
         logger.info("Launching Streamlit web interface...")
-        import streamlit.cli
-        sys.argv = ["streamlit", "run", str(Path(__file__).parent / "app" / "main.py")]
-        streamlit.cli.main()
-    
-    # Image analysis
-    elif args.image:
-        logger.info("=" * 80)
-        logger.info("Lung Cancer Detection AI System")
-        logger.info("=" * 80)
-        
+        import subprocess
+        app_path = Path(__file__).parent / "app" / "main.py"
+        subprocess.run([
+            "streamlit",
+            "run",
+            str(app_path)
+        ])
+        return
+
+    # If image provided, run analysis
+    if args.image:
         # Initialize pipeline
         pipeline = LungCancerDetectionPipeline(config)
-        
+
         # Prepare patient info
         patient_info = {
             'patient_id': args.patient_id,
@@ -208,39 +206,44 @@ Examples:
             'age': args.age,
             'study_date': datetime.now().strftime("%Y-%m-%d")
         }
-        
+
         # Run analysis
         results = pipeline.analyze_image(
             args.image,
             patient_info=patient_info,
             generate_report=not args.no_report
         )
-        
-        if results and results['status'] == 'success':
+
+        if results and results.get('status') == 'success':
             # Display results
             print("\n" + "=" * 80)
             print("ANALYSIS RESULTS")
             print("=" * 80)
-            
+
             risk = results['risk_assessment']
             print(f"\nRisk Assessment:")
-            print(f"  Risk Score: {risk.risk_score:.3f}")
-            print(f"  Risk Level: {risk.risk_level.value}")
-            print(f"  Recommendation: {risk.recommendation}")
-            print(f"  Follow-up: {risk.followup_period}")
-            
+            try:
+                print(f"  Risk Score: {risk.risk_score:.3f}")
+                print(f"  Risk Level: {risk.risk_level.value}")
+                print(f"  Recommendation: {risk.recommendation}")
+                print(f"  Follow-up: {risk.followup_period}")
+            except Exception:
+                print("  (risk details unavailable)")
+
             print(f"\nClinical Recommendations:")
-            for i, rec in enumerate(results['recommendations'], 1):
-                print(f"  {i}. {rec.action} (Priority: {rec.priority})")
-            
-            if results['report_path']:
+            for i, rec in enumerate(results.get('recommendations', []), 1):
+                try:
+                    print(f"  {i}. {rec.action} (Priority: {rec.priority})")
+                except Exception:
+                    print(f"  {i}. {rec}")
+
+            if results.get('report_path'):
                 print(f"\nReport saved: {results['report_path']}")
-            
+
             print("\n" + "=" * 80)
         else:
             print("Analysis failed. Check logs for details.")
             sys.exit(1)
-    
     else:
         parser.print_help()
         print("\nUse --web for web interface or --image <path> for image analysis")
