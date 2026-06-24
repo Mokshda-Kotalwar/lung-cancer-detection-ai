@@ -126,3 +126,8 @@ FileNotFoundError: [Errno 2] No such file or directory: '/tmp/test_image.png'
 2026-06-24 18:50:51,583 - app.db - INFO - Successfully saved record REC_1782307251 to SQLite
 2026-06-24 18:52:27,777 - src.detection - ERROR - Model not loaded
 2026-06-24 18:52:27,791 - app.db - INFO - Successfully saved record REC_1782307347 to SQLite
+2026-06-24 18:53:21,549 - git.cmd - INFO - Ignored error after process had died: OSError(9, 'The handle is invalid', None, 6, None)
+2026-06-24 18:53:21,558 - git.cmd - INFO - Ignored error while terminating process: OSError(9, 'The handle is invalid', None, 6, None)
+2026-06-24 18:54:13,044 - app.db - INFO - Successfully saved record REC_1782307453 to SQLite
+2026-06-24 18:54:15,609 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-06-24 18:54:54,399 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
