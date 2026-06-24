@@ -30,16 +30,18 @@ class MedicalImagePreprocessor:
     Handles DICOM windowing, noise removal, CLAHE, and Albumentations augmentations.
     """
 
-    def __init__(self, config: Any, is_training: bool = False):
+    def __init__(self, config: Any, is_training: bool = False, has_bboxes: bool = False):
         """
         Initialize the preprocessor with central configurations.
 
         Args:
             config: Main Config instance
             is_training: Whether to construct the augmentation pipeline
+            has_bboxes: Whether bounding boxes are provided
         """
         self.config = config
         self.is_training = is_training
+        self.has_bboxes = has_bboxes
         
         # Load preprocessing specs
         self.target_size = getattr(config.model, 'input_size', 512)
@@ -86,7 +88,7 @@ class MedicalImagePreprocessor:
         # Specify bounding box and mask parameters if needed
         return A.Compose(
             transforms_list,
-            bbox_params=A.BboxParams(format='yolo', label_fields=['class_labels']) if self.is_training else None
+            bbox_params=A.BboxParams(format='yolo', label_fields=['class_labels']) if (self.is_training and self.has_bboxes) else None
         )
 
     def apply_window_level(self, image: np.ndarray) -> np.ndarray:
@@ -242,7 +244,7 @@ class LungNoduleDataset(Dataset):
         self.is_training = is_training
         
         # Instantiate the preprocessor
-        self.preprocessor = MedicalImagePreprocessor(config, is_training=is_training)
+        self.preprocessor = MedicalImagePreprocessor(config, is_training=is_training, has_bboxes=(bboxes is not None))
 
     def __len__(self) -> int:
         return len(self.image_paths)

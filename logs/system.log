@@ -66,3 +66,53 @@ FileNotFoundError: [Errno 2] No such file or directory: '/tmp/test_image.png'
 2026-06-22 21:40:16,241 - __main__ - INFO - Dataset Balance Index (0-1): 0.887 (1.0 = Perfect Balance)
 2026-06-22 21:46:17,272 - __main__ - INFO - Class Distribution: {'Normal': 110, 'Benign': 60, 'Malignant': 30}
 2026-06-22 21:46:17,274 - __main__ - INFO - Dataset Balance Index (0-1): 0.887 (1.0 = Perfect Balance)
+2026-06-24 18:15:32,110 - __main__ - INFO - Generating synthetic 2D scans for validation...
+2026-06-24 18:15:40,267 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
+2026-06-24 18:15:40,276 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-06-24 18:15:40,286 - __main__ - INFO - ================================================================================
+2026-06-24 18:15:40,286 - __main__ - INFO - STARTING Densenet121 LUNG NODULE CLASSIFICATION MODEL TRAINING
+2026-06-24 18:15:40,286 - __main__ - INFO - ================================================================================
+2026-06-24 18:15:40,353 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 4: Your 'label_fields' are not valid - them must have same names as params in dict
+2026-06-24 18:15:40,375 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 5: Your 'label_fields' are not valid - them must have same names as params in dict
+2026-06-24 18:15:40,393 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 2: Your 'label_fields' are not valid - them must have same names as params in dict
+2026-06-24 18:15:40,409 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 6: Your 'label_fields' are not valid - them must have same names as params in dict
+2026-06-24 18:16:00,389 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 3: Your 'label_fields' are not valid - them must have same names as params in dict
+2026-06-24 18:16:00,418 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 1: Your 'label_fields' are not valid - them must have same names as params in dict
+2026-06-24 18:16:00,437 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 7: Your 'label_fields' are not valid - them must have same names as params in dict
+2026-06-24 18:16:00,459 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 0: Your 'label_fields' are not valid - them must have same names as params in dict
+2026-06-24 18:16:15,865 - __main__ - INFO - Epoch [1/2] | Train Loss: 1.1096 | Val Loss: 1.0806 | Val Acc: 0.500 | Val F1: 0.222 | Val Spec: 0.667 | Val AUC: 0.556
+2026-06-24 18:16:15,969 - __main__ - INFO -   --> Saved new best DenseNet checkpoint (F1: 0.222): C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\test_densenet.pth
+2026-06-24 18:16:17,569 - __main__ - INFO - Saved confusion matrix plot to C:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\plots\confusion_matrix.png
+2026-06-24 18:16:17,861 - __main__ - INFO - Saved ROC curve plot to C:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\plots\roc_curve.png
+2026-06-24 18:16:17,888 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 3: Your 'label_fields' are not valid - them must have same names as params in dict
+2026-06-24 18:16:17,909 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 2: Your 'label_fields' are not valid - them must have same names as params in dict
+2026-06-24 18:16:17,931 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 7: Your 'label_fields' are not valid - them must have same names as params in dict
+2026-06-24 18:16:17,949 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 0: Your 'label_fields' are not valid - them must have same names as params in dict
+2026-06-24 18:16:28,929 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 1: Your 'label_fields' are not valid - them must have same names as params in dict
+2026-06-24 18:16:28,955 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 6: Your 'label_fields' are not valid - them must have same names as params in dict
+2026-06-24 18:16:28,974 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 5: Your 'label_fields' are not valid - them must have same names as params in dict
+2026-06-24 18:16:28,995 - src.preprocessing.dataset - ERROR - Albumentations transformation failed at index 4: Your 'label_fields' are not valid - them must have same names as params in dict
+2026-06-24 18:16:43,716 - __main__ - INFO - Epoch [2/2] | Train Loss: 0.4893 | Val Loss: 1.1381 | Val Acc: 0.000 | Val F1: 0.000 | Val Spec: 0.500 | Val AUC: 0.000
+2026-06-24 18:16:43,719 - __main__ - INFO - EarlyStopping counter: 1 out of 5
+2026-06-24 18:16:43,719 - __main__ - INFO - [SUCCESS] DenseNet121 Classification Training Complete!
+2026-06-24 18:16:43,769 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-06-24 18:16:45,279 - __main__ - ERROR - Grad-CAM generation failed: Output 0 of BackwardHookFunctionBackward is a view and is being modified inplace. This view was created inside a custom Function (or because an input was returned as-is) and the autograd logic to handle view+inplace would override the custom backward associated with the custom Function, leading to incorrect gradients. This behavior is forbidden. You can fix this by cloning the output of the custom Function.
+2026-06-24 18:17:38,209 - __main__ - INFO - Generating synthetic 2D scans for validation...
+2026-06-24 18:17:38,733 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
+2026-06-24 18:17:38,741 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-06-24 18:17:38,752 - __main__ - INFO - ================================================================================
+2026-06-24 18:17:38,752 - __main__ - INFO - STARTING Densenet121 LUNG NODULE CLASSIFICATION MODEL TRAINING
+2026-06-24 18:17:38,752 - __main__ - INFO - ================================================================================
+2026-06-24 18:18:18,804 - __main__ - INFO - Epoch [1/2] | Train Loss: 1.1600 | Val Loss: 1.1192 | Val Acc: 0.250 | Val F1: 0.133 | Val Spec: 0.667 | Val AUC: 0.667
+2026-06-24 18:18:19,060 - __main__ - INFO -   --> Saved new best DenseNet checkpoint (F1: 0.133): C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\test_densenet.pth
+2026-06-24 18:18:21,004 - __main__ - INFO - Saved confusion matrix plot to C:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\plots\confusion_matrix.png
+2026-06-24 18:18:21,849 - __main__ - INFO - Saved ROC curve plot to C:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\plots\roc_curve.png
+2026-06-24 18:18:50,092 - __main__ - INFO - Epoch [2/2] | Train Loss: 1.1002 | Val Loss: 1.1645 | Val Acc: 0.250 | Val F1: 0.133 | Val Spec: 0.667 | Val AUC: 0.333
+2026-06-24 18:18:50,092 - __main__ - INFO - EarlyStopping counter: 1 out of 5
+2026-06-24 18:18:50,092 - __main__ - INFO - [SUCCESS] DenseNet121 Classification Training Complete!
+2026-06-24 18:18:50,143 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-06-24 18:18:52,857 - __main__ - INFO - Grad-CAM explainability verification completed. Sample saved to C:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\plots\densenet_gradcam_sample.png
+2026-06-24 18:21:39,555 - src.utils - INFO - Random seed set to 42
+2026-06-24 18:22:30,425 - src.utils - INFO - Random seed set to 42
+2026-06-24 18:23:41,405 - src.utils - INFO - Random seed set to 42
+2026-06-24 18:23:41,405 - __main__ - INFO - Launching Streamlit web interface...

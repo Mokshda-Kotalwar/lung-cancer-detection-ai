@@ -39,17 +39,20 @@ class GradCAM:
     def _register_hooks(self):
         """Register forward and backward hooks"""
         def forward_hook(module, input, output):
-            self.activations = output.detach()
-        
-        def backward_hook(module, grad_input, grad_output):
-            self.gradients = grad_output[0].detach()
+            # Save activations (detached clone)
+            self.activations = output.detach().clone()
+            
+            # Register a hook on the activation tensor directly to capture gradients
+            def tensor_backward_hook(grad):
+                self.gradients = grad.detach().clone()
+                
+            output.register_hook(tensor_backward_hook)
         
         # Find target layer
         for name, module in self.model.named_modules():
             if name == self.target_layer_name or self.target_layer_name in name:
                 self.target_layer = module
                 module.register_forward_hook(forward_hook)
-                module.register_full_backward_hook(backward_hook)
                 logger.info(f"Registered hooks for layer: {name}")
                 break
         
