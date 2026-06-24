@@ -131,3 +131,12 @@ FileNotFoundError: [Errno 2] No such file or directory: '/tmp/test_image.png'
 2026-06-24 18:54:13,044 - app.db - INFO - Successfully saved record REC_1782307453 to SQLite
 2026-06-24 18:54:15,609 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
 2026-06-24 18:54:54,399 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-06-24 19:46:48,223 - src.detection - ERROR - Model not loaded
+2026-06-24 19:46:48,238 - app.db - INFO - Successfully saved record REC_1782310608 to SQLite
+2026-06-24 19:47:20,357 - src.reporting - INFO - ReportLab loaded successfully
+2026-06-24 19:47:20,372 - src.reporting - INFO - PDF report generated: C:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\report_PAT_10593_1782310640.pdf
+2026-06-24 19:48:30,493 - src.detection - ERROR - Model not loaded
+2026-06-24 19:48:30,499 - app.db - INFO - Successfully saved record REC_1782310710 to SQLite
+2026-06-24 19:49:04,723 - src.reporting - INFO - ReportLab loaded successfully
+2026-06-24 19:49:04,746 - src.reporting - INFO - PDF report generated: C:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\report_PAT_101_1782310744.pdf
+2026-06-24 20:25:33,646 - __main__ - INFO - Launching Streamlit web interface...

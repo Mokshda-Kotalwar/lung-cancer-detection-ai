@@ -62,3 +62,12 @@ sqlalchemy==2.0.23
 # Additional useful packages
 Pillow-SIMD==9.5.0.post1
 requests==2.31.0
+
+# FastAPI Backend Dependencies
+fastapi==0.104.1
+uvicorn[standard]==0.24.0.post1
+motor==3.3.1
+passlib[bcrypt]==1.7.4
+python-jose[cryptography]==3.3.0
+python-multipart==0.0.6
+pydantic-settings==2.0.3

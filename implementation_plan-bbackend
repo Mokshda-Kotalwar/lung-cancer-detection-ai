@@ -1,0 +1,70 @@
+# FastAPI Backend Implementation Plan
+
+We will create a production-ready FastAPI backend with the requested features, including PyTorch model loading, image upload/prediction, MongoDB Atlas integration, and JWT authentication.
+
+## User Review Required
+
+> [!WARNING]
+> Please review the chosen dependencies and the proposed folder structure. We will use `motor` (async MongoDB driver) and `passlib` for password hashing. We will also need a MongoDB Atlas connection string set in the environment variables (e.g., `MONGODB_URL`). Please confirm if you have a `.env` file ready with the necessary credentials.
+
+## Open Questions
+
+> [!IMPORTANT]
+> 1. Which model exactly do you want to use for the prediction endpoint? The codebase has `DenseNetClassifier` and `UNet3D`. I will assume `DenseNetClassifier` for standard image classification (benign/malignant/uncertain) for now.
+> 2. What format are the uploaded images? (e.g., DICOM, JPEG, PNG)?
+> 3. Do you have a specific path to the pre-trained weights for the model (e.g., `models/best_model.pth`), or should I set up a placeholder path in the config?
+
+## Proposed Changes
+
+We will create a new `backend/` directory in the root of the project to house the FastAPI application.
+
+### Backend Infrastructure
+
+#### [NEW] [backend/core/config.py](file:///c:/Users/Admin/Documents/lung-cancer-detection-ai/backend/core/config.py)
+Configuration settings using Pydantic `BaseSettings` to manage environment variables like MongoDB URI, JWT Secret Key, and model paths.
+
+#### [NEW] [backend/core/security.py](file:///c:/Users/Admin/Documents/lung-cancer-detection-ai/backend/core/security.py)
+Functions for hashing passwords using `passlib` and creating/verifying JWT tokens using `python-jose`.
+
+#### [NEW] [backend/models/schemas.py](file:///c:/Users/Admin/Documents/lung-cancer-detection-ai/backend/models/schemas.py)
+Pydantic models for request and response validation (User, UserCreate, Token, PredictionResult, PatientHistory).
+
+### ML Model Wrapper
+
+#### [NEW] [backend/ml/predictor.py](file:///c:/Users/Admin/Documents/lung-cancer-detection-ai/backend/ml/predictor.py)
+A wrapper class that initializes the PyTorch `DenseNetClassifier`, loads weights, and provides a method to preprocess uploaded images (PIL/bytes to Tensor) and perform inference, returning probabilities/confidence scores.
+
+### API Routes
+
+#### [NEW] [backend/api/deps.py](file:///c:/Users/Admin/Documents/lung-cancer-detection-ai/backend/api/deps.py)
+Dependency injection functions to get the current authenticated user from a JWT token, and to get the database instance.
+
+#### [NEW] [backend/api/routes/auth.py](file:///c:/Users/Admin/Documents/lung-cancer-detection-ai/backend/api/routes/auth.py)
+Endpoints for user signup and login (`/signup`, `/login`) to issue JWT tokens.
+
+#### [NEW] [backend/api/routes/predict.py](file:///c:/Users/Admin/Documents/lung-cancer-detection-ai/backend/api/routes/predict.py)
+Endpoint for image upload and prediction (`/predict`). It will require authentication, process the uploaded file, run inference, save the history to MongoDB, and return the prediction in JSON.
+
+#### [NEW] [backend/api/routes/history.py](file:///c:/Users/Admin/Documents/lung-cancer-detection-ai/backend/api/routes/history.py)
+Endpoint (`/history`) to retrieve the authenticated user's past predictions/patient history from MongoDB.
+
+### Application Entrypoint
+
+#### [NEW] [backend/main.py](file:///c:/Users/Admin/Documents/lung-cancer-detection-ai/backend/main.py)
+The FastAPI app initialization, including CORS middleware setup, exception handlers, and routing inclusion.
+
+#### [NEW] [backend/database.py](file:///c:/Users/Admin/Documents/lung-cancer-detection-ai/backend/database.py)
+MongoDB client setup using `motor.motor_asyncio`.
+
+## Verification Plan
+
+### Automated Tests
+- We could add some simple `pytest` scripts later if desired, but for now we will rely on manual testing via Swagger UI.
+
+### Manual Verification
+1. Run the FastAPI dev server (`uvicorn backend.main:app --reload`).
+2. Navigate to `/docs` (Swagger UI).
+3. Test the `/signup` endpoint to create a user.
+4. Test the `/login` endpoint to obtain a token and authorize the Swagger UI session.
+5. Use the `/predict` endpoint to upload an image and receive the prediction/confidence score JSON.
+6. Verify the result is saved by calling the `/history` endpoint.
