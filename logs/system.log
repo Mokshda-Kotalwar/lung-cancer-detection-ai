@@ -148,3 +148,9 @@ FileNotFoundError: [Errno 2] No such file or directory: '/tmp/test_image.png'
 2026-06-24 20:26:50,286 - app.db - INFO - Successfully saved record REC_1782313010 to SQLite
 2026-06-24 20:26:55,691 - app.db - INFO - Successfully saved record REC_1782313015 to SQLite
 2026-06-24 20:26:56,742 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-06-25 10:53:29,799 - __main__ - INFO - Launching Streamlit web interface...
+2026-06-25 10:54:02,297 - src.detection - ERROR - Error loading YOLOv8: Torch not compiled with CUDA enabled
+2026-06-25 10:54:03,337 - src.detection - ERROR - Error loading EfficientNet: Unknown model (efficientnet_efficientnet-b4)
+2026-06-25 10:54:04,626 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
+2026-06-25 10:54:04,644 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-06-25 10:54:04,945 - __main__ - INFO - Loaded DenseNet121 weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\test_densenet.pth
