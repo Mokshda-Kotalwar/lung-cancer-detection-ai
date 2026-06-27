@@ -154,3 +154,47 @@ FileNotFoundError: [Errno 2] No such file or directory: '/tmp/test_image.png'
 2026-06-25 10:54:04,626 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
 2026-06-25 10:54:04,644 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
 2026-06-25 10:54:04,945 - __main__ - INFO - Loaded DenseNet121 weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\test_densenet.pth
+2026-06-25 12:01:40,030 - __main__ - INFO - Launching Streamlit web interface...
+2026-06-25 12:02:06,744 - src.detection - ERROR - Error loading YOLOv8: Torch not compiled with CUDA enabled
+2026-06-25 12:02:08,140 - src.detection - ERROR - Error loading EfficientNet: Unknown model (efficientnet_efficientnet-b4)
+2026-06-25 12:02:09,597 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
+2026-06-25 12:02:09,605 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-06-25 12:02:09,932 - __main__ - INFO - Loaded DenseNet121 weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\test_densenet.pth
+2026-06-25 12:04:04,887 - src.detection - ERROR - Model not loaded
+2026-06-25 12:04:04,909 - app.db - INFO - Successfully saved record REC_1782369244 to SQLite
+2026-06-25 12:08:54,876 - src.detection - ERROR - Model not loaded
+2026-06-25 12:08:54,895 - app.db - INFO - Successfully saved record REC_1782369534 to SQLite
+2026-06-25 12:10:30,079 - src.reporting - INFO - ReportLab loaded successfully
+2026-06-25 12:10:30,135 - src.reporting - INFO - PDF report generated: C:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\report_PAT_69205_1782369629.pdf
+2026-06-25 12:10:37,561 - src.reporting - INFO - ReportLab loaded successfully
+2026-06-25 12:10:37,608 - src.reporting - INFO - PDF report generated: C:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\report_PAT_69205_1782369637.pdf
+2026-06-25 13:08:31,535 - src.utils - INFO - Random seed set to 42
+2026-06-25 13:08:34,300 - src.detection - ERROR - Error loading YOLOv8: Torch not compiled with CUDA enabled
+2026-06-25 13:08:35,138 - src.detection - ERROR - Error loading EfficientNet: Unknown model (efficientnet_efficientnet-b4)
+2026-06-25 13:08:35,418 - src.reporting - INFO - ReportLab loaded successfully
+2026-06-25 13:08:35,418 - main - INFO - Pipeline initialized
+2026-06-25 13:08:35,455 - main - INFO - Loading image: /tmp/test_image.png
+2026-06-25 13:08:35,455 - main - ERROR - Error in analysis pipeline: [Errno 2] No such file or directory: '/tmp/test_image.png'
+Traceback (most recent call last):
+  File "C:\Users\Admin\Documents\lung-cancer-detection-ai\main.py", line 60, in analyze_image
+    image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+  File "c:\Users\Admin\Documents\lung-cancer-detection-ai\venv\lib\site-packages\ultralytics\utils\patches.py", line 25, in imread
+    return cv2.imdecode(np.fromfile(filename, np.uint8), flags)
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/test_image.png'
+2026-06-25 13:11:05,144 - __main__ - INFO - Launching Streamlit web interface...
+2026-06-25 13:11:54,625 - app.db - INFO - Successfully saved record REC_1782373314 to SQLite
+2026-06-25 13:12:09,356 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-06-25 14:28:38,117 - asyncio - ERROR - Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "C:\Program Files\Python310\lib\asyncio\events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\Program Files\Python310\lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+    self._sock.shutdown(socket.SHUT_RDWR)
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+2026-06-27 15:16:05,703 - __main__ - INFO - Launching Streamlit web interface...
+2026-06-27 15:26:19,888 - src.detection - ERROR - Error loading YOLOv8: Torch not compiled with CUDA enabled
+2026-06-27 15:26:20,259 - src.detection - ERROR - Error loading EfficientNet: Unknown model (efficientnet_efficientnet-b4)
+2026-06-27 15:26:20,599 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
+2026-06-27 15:26:20,603 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-06-27 15:26:20,713 - __main__ - INFO - Loaded DenseNet121 weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\test_densenet.pth

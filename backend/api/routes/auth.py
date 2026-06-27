@@ -1,7 +1,7 @@
 from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-from backend.models.schemas import UserCreate, UserResponse, Token
+from backend.models.schemas import UserCreate, UserResponse, Token, Role
 from backend.core.security import get_password_hash, verify_password, create_access_token
 from backend.core.config import settings
 from backend.api.deps import get_db
@@ -25,6 +25,7 @@ async def create_user(user: UserCreate, db = Depends(get_db)):
     user_dict = {
         "email": user.email,
         "full_name": user.full_name,
+        "role": user.role.value if hasattr(user.role, 'value') else user.role,
         "hashed_password": hashed_password
     }
     
@@ -57,7 +58,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     # Create access token
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"email": user["email"]}, expires_delta=access_token_expires
+        data={"email": user["email"], "role": user.get("role", Role.USER)}, expires_delta=access_token_expires
     )
     
     return {"access_token": access_token, "token_type": "bearer"}

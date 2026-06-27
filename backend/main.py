@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from backend.core.config import settings
 from backend.database import connect_to_mongo, close_mongo_connection
-from backend.api.routes import auth, predict, history
+from backend.api.routes import auth, predict, history, health
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -29,6 +29,7 @@ async def shutdown_db_client():
     await close_mongo_connection()
 
 # Include Routers
+app.include_router(health.router, prefix="/health", tags=["Health"])
 app.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 app.include_router(predict.router, prefix="/predict", tags=["Prediction"])
 app.include_router(history.router, prefix="/history", tags=["History"])

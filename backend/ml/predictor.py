@@ -3,7 +3,12 @@ from torchvision import transforms
 from PIL import Image
 import io
 import logging
+import cv2
+import numpy as np
 from src.models.classifier import DenseNetClassifier
+from src.xai import GradCAM
+from src.risk import RiskScorer
+from config import config
 
 logger = logging.getLogger(__name__)
 
@@ -32,11 +37,17 @@ class LungCancerPredictor:
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         ])
+        
+        self.risk_scorer = RiskScorer(config)
 
-    def predict(self, image_bytes: bytes) -> dict:
+    def _prepare_tensor(self, image_bytes: bytes) -> tuple:
+        image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+        tensor = self.transform(image).unsqueeze(0).to(self.device)
+        return image, tensor
+
+    def predict(self, image_bytes: bytes, patient_info: dict = None) -> dict:
         try:
-            image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-            tensor = self.transform(image).unsqueeze(0).to(self.device)
+            image, tensor = self._prepare_tensor(image_bytes)
             
             with torch.no_grad():
                 outputs = self.model(tensor)
@@ -49,14 +60,72 @@ class LungCancerPredictor:
                 for i in range(self.num_classes)
             }
             
+            # Default mock parameters for detection info since YOLO is not running in backend currently
+            detection_count = 1 if predicted_idx.item() == 1 else 0
+            
+            # Calculate Risk if patient_info provided
+            risk_info = {}
+            if patient_info:
+                clinical_features = {}
+                if "age" in patient_info and patient_info["age"]:
+                    clinical_features["age"] = patient_info["age"] / 100.0
+                if "smoker" in patient_info and patient_info["smoker"]:
+                    clinical_features["smoking_pack_years"] = 0.8
+                
+                risk_assessment = self.risk_scorer.calculate_risk(
+                    classification_confidence=float(confidence.item()),
+                    detection_count=detection_count,
+                    detection_size=12.5 if detection_count > 0 else 0.0,
+                    detection_confidence=float(confidence.item()),
+                    clinical_features=clinical_features
+                )
+                risk_info = {
+                    "risk_score": risk_assessment.risk_score,
+                    "risk_level": risk_assessment.risk_level.value,
+                    "recommendation": risk_assessment.recommendation
+                }
+            
             return {
                 "prediction": self.class_names[predicted_idx.item()],
                 "confidence": float(confidence.item()),
-                "probabilities": probs_dict
+                "probabilities": probs_dict,
+                **risk_info
             }
         except Exception as e:
             logger.error(f"Prediction failed: {e}")
             raise e
 
-# Instantiate a global predictor, we can defer loading the path to initialization or config
+    def generate_gradcam(self, image_bytes: bytes) -> bytes:
+        try:
+            image, tensor = self._prepare_tensor(image_bytes)
+            # Use original image as numpy array for GradCAM overlay
+            original_image = np.array(image)
+            
+            # Predict to get target class
+            with torch.no_grad():
+                outputs = self.model(tensor)
+                probabilities = torch.nn.functional.softmax(outputs, dim=1).squeeze(0)
+            _, predicted_idx = torch.max(probabilities, 0)
+            
+            target_layer = "backbone.features.norm5"
+            gradcam = GradCAM(self.model, target_layer=target_layer, device=self.device)
+            
+            heatmap_overlay = gradcam.visualize(
+                input_tensor=tensor,
+                original_image=original_image,
+                target_class=predicted_idx.item(),
+                colormap="jet",
+                alpha=0.4
+            )
+            
+            # Convert back to bytes
+            is_success, buffer = cv2.imencode(".png", cv2.cvtColor(heatmap_overlay, cv2.COLOR_RGB2BGR))
+            if not is_success:
+                raise ValueError("Could not encode Grad-CAM image to PNG format")
+            return buffer.tobytes()
+        except Exception as e:
+            logger.error(f"GradCAM generation failed: {e}")
+            raise e
+
+# Instantiate a global predictor
 predictor = LungCancerPredictor()

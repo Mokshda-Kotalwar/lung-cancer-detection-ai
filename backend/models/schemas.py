@@ -1,10 +1,17 @@
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional, List
 from datetime import datetime
+from enum import Enum
+
+class Role(str, Enum):
+    DOCTOR = "doctor"
+    ADMIN = "admin"
+    USER = "user"
 
 class UserBase(BaseModel):
     email: EmailStr
     full_name: Optional[str] = None
+    role: Role = Role.USER
 
 class UserCreate(UserBase):
     password: str
@@ -22,17 +29,36 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     email: Optional[str] = None
+    role: Optional[Role] = None
 
 class PredictionResult(BaseModel):
     prediction: str
     confidence: float
     probabilities: dict[str, float]
+    risk_score: Optional[float] = None
+    risk_level: Optional[str] = None
+    recommendation: Optional[str] = None
+
+class ConfidenceResult(BaseModel):
+    prediction: str
+    confidence: float
+
+class PatientDetails(BaseModel):
+    patient_id: Optional[str] = None
+    name: Optional[str] = None
+    age: Optional[int] = None
+    gender: Optional[str] = None
+    smoker: Optional[bool] = None
+    study_date: Optional[str] = None
 
 class PatientHistoryCreate(BaseModel):
-    patient_id: Optional[str] = None
+    patient_details: PatientDetails
     prediction: str
     confidence: float
     probabilities: dict[str, float]
+    risk_score: Optional[float] = None
+    risk_level: Optional[str] = None
+    recommendation: Optional[str] = None
     notes: Optional[str] = None
 
 class PatientHistoryInDB(PatientHistoryCreate):

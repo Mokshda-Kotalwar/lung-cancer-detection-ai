@@ -1,0 +1,35 @@
+services:
+  # Backend FastAPI Service
+  - type: web
+    name: lung-cancer-api
+    env: docker
+    dockerfilePath: ./Dockerfile.backend
+    region: oregon
+    plan: free
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: MONGODB_URL
+        sync: false
+      - key: DATABASE_NAME
+        value: lung_cancer_db
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALGORITHM
+        value: HS256
+
+  # Frontend Streamlit Service
+  - type: web
+    name: lung-cancer-dashboard
+    env: docker
+    dockerfilePath: ./Dockerfile.frontend
+    region: oregon
+    plan: free
+    envVars:
+      - key: PORT
+        value: 8501
+      - key: BACKEND_URL
+        fromService:
+          type: web
+          name: lung-cancer-api
+          envVarKey: RENDER_EXTERNAL_URL
