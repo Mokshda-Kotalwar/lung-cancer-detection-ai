@@ -152,7 +152,7 @@ Examples:
         help="Patient ID"
     )
     parser.add_argument(
-        "--name", 
+        "--name",
         type=str,
         default="Unknown",
         help="Patient name"
