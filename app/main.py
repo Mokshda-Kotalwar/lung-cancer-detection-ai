@@ -161,6 +161,18 @@ def main():
             st.markdown(f"<div class='glass-card' style='text-align: center;'><div class='metric-label'>Your Total Scans</div><div class='metric-value'>{total_scans}</div></div>", unsafe_allow_html=True)
         with col2:
             st.markdown(f"<div class='glass-card' style='text-align: center;'><div class='metric-label'>High/Critical Findings</div><div class='metric-value' style='color: #f87171;'>{high_risk_scans}</div></div>", unsafe_allow_html=True)
+
+        st.divider()
+        st.subheader("ℹ️ About Lung Cancer")
+        st.markdown("""
+        Lung cancer is the leading cause of cancer deaths worldwide. Early detection can significantly increase the chances of successful treatment and survival. 
+        Our AI-powered diagnostic system is designed to assist radiologists and healthcare professionals by analyzing CT scan slices to identify potential pulmonary nodules and classify their malignancy risk.
+        
+        **Key Facts:**
+        - **Early Detection:** When diagnosed at an early stage, survival rates are much higher.
+        - **Risk Factors:** Smoking is the primary risk factor, but exposure to radon, asbestos, and family history also play significant roles.
+        - **Our Technology:** Uses state-of-the-art Deep Learning (DenseNet & YOLOv8) to highlight areas of concern (Grad-CAM) and estimate clinical risk levels.
+        """)
             
     elif selected == "Scan Upload":
         st.subheader("📋 Enter Patient Metadata")
@@ -261,6 +273,38 @@ def main():
             
         st.subheader("🏥 Clinical Recommendations & Next Steps")
         st.write(f"**Risk Scorer Reasoning**: {pred_data.get('recommendation', 'N/A')}")
+        
+        st.divider()
+        st.subheader("📄 Export Report")
+        
+        if st.button("Download PDF Report", use_container_width=True):
+            with st.spinner("Generating PDF Report..."):
+                headers = {"Authorization": f"Bearer {st.session_state['token']}"}
+                
+                # We need to send the original image bytes stored in session_state, but we only have the PIL Image.
+                # Let's convert it back to bytes.
+                img_byte_arr = io.BytesIO()
+                res["original_image"].save(img_byte_arr, format='PNG')
+                img_bytes = img_byte_arr.getvalue()
+                
+                files = {"file": ("scan.png", img_bytes, "image/png")}
+                data = {"patient_details_json": json.dumps(st.session_state["patient_data"])}
+                
+                try:
+                    pdf_res = requests.post(f"{BACKEND_URL}/predict/report", headers=headers, files=files, data=data)
+                    if pdf_res.status_code == 200:
+                        st.download_button(
+                            label="Click here to save the PDF",
+                            data=pdf_res.content,
+                            file_name=f"lung_cancer_report_{p_data.get('patient_id', 'unknown')}.pdf",
+                            mime="application/pdf",
+                            type="primary",
+                            use_container_width=True
+                        )
+                    else:
+                        st.error(f"Failed to generate report: {pdf_res.text}")
+                except Exception as e:
+                    st.error(f"Failed to connect to backend for report generation: {e}")
         
     elif selected == "Patient History Log":
         st.subheader("🗄️ Database Record Explorer")
