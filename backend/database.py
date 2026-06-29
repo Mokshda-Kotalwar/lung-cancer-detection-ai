@@ -8,8 +8,15 @@ class Database:
 db_manager = Database()
 
 async def connect_to_mongo():
+    print("="*60)
+    print("Connecting to MongoDB...")
+
     db_manager.client = AsyncIOMotorClient(settings.MONGODB_URL)
     db_manager.db = db_manager.client[settings.DATABASE_NAME]
+
+    print("Connected!")
+    print("Database:", db_manager.db)
+    print("="*60)
 
 async def close_mongo_connection():
     if db_manager.client:

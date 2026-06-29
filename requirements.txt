@@ -60,7 +60,7 @@ pymongo==4.5.0
 sqlalchemy==2.0.23
 
 # Additional useful packages
-Pillow-SIMD==9.5.0.post1
+Pillow 
 requests==2.31.0
 
 # FastAPI Backend Dependencies
