@@ -1,3 +1,5 @@
+import traceback
+
 from fastapi import APIRouter, Depends, File, UploadFile, HTTPException, Form
 from fastapi.responses import Response
 from typing import Optional
@@ -182,11 +184,12 @@ async def generate_report(
             raise Exception("Failed to generate PDF report")
             
         return FileResponse(
-            temp_path, 
-            media_type='application/pdf', 
-            filename=f"lung_cancer_report_{patient_info.get('patient_id', 'unknown')}.pdf",
-            background=None
+            temp_path,
+            media_type='application/pdf',
+            filename=f"lung_cancer_report_{patient_info.get('patient_id', 'unknown')}.pdf"
         )
     except Exception as e:
+        traceback.print_exc()      # prints full traceback
+        print(f"ERROR: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
