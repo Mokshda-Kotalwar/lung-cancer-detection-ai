@@ -102,9 +102,9 @@ class LungCancerPredictor:
             original_image = np.array(image)
             
             # Predict to get target class
-            with torch.no_grad():
-                outputs = self.model(tensor)
-                probabilities = torch.nn.functional.softmax(outputs, dim=1).squeeze(0)
+            
+            outputs = self.model(tensor)
+            probabilities = torch.nn.functional.softmax(outputs, dim=1).squeeze(0)
             _, predicted_idx = torch.max(probabilities, 0)
             
             target_layer = "backbone.features.norm5"
