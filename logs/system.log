@@ -237,3 +237,8 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2026-06-30 18:55:22,001 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
 2026-06-30 18:56:14,993 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
 2026-06-30 18:56:37,877 - backend.ml.predictor - ERROR - Prediction failed: cannot register a hook on a tensor that doesn't require gradient
+2026-06-30 19:04:08,795 - src.models.classifier - INFO - Initialized DenseNet121 backbone with random weights
+2026-06-30 19:04:08,807 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-06-30 19:04:33,020 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-06-30 19:04:38,490 - src.reporting - INFO - ReportLab loaded successfully
+2026-06-30 19:04:39,997 - src.reporting - INFO - PDF report generated: C:\Users\Admin\AppData\Local\Temp\tmp7lt6feve.pdf
