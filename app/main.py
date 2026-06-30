@@ -16,6 +16,26 @@ import io
 import cv2
 import pandas as pd
 import streamlit as st
+
+
+st.set_page_config(
+    page_title="LungAI Diagnostics",
+    page_icon="🫁",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+BACKEND_URL = "http://127.0.0.1:8000"
+
+print("Backend:", BACKEND_URL)
+
+try:
+    r = requests.get(f"{BACKEND_URL}/health/", timeout=5)
+    print(r.status_code)
+    print(r.text)
+except Exception as e:
+    print(e)
+
 from streamlit_option_menu import option_menu
 import requests
 
@@ -25,15 +45,6 @@ sys.path.insert(0, str(project_root))
 
 from config import OUTPUTS_DIR
 
-BACKEND_URL = os.environ.get("BACKEND_URL", "http://localhost:8000")
-
-# Page configuration
-st.set_page_config(
-    page_title="LungAI Diagnostics",
-    page_icon="🫁",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
 
 # Premium Dark Glassmorphism CSS styling
 st.markdown("""
@@ -60,9 +71,18 @@ st.markdown("""
 
 def check_backend():
     try:
-        response = requests.get(f"{BACKEND_URL}/health", timeout=2)
+        url = f"{BACKEND_URL}/health/"
+        print("Checking:", url)
+
+        response = requests.get(url, timeout=5)
+
+        print("Status:", response.status_code)
+        print("Body:", response.text)
+
         return response.status_code == 200
-    except:
+
+    except Exception as e:
+        print("Backend Error:", repr(e))
         return False
 
 def login(email, password):
