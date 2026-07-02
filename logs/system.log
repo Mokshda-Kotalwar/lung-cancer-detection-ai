@@ -276,3 +276,4 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2026-07-02 15:52:58,571 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
 2026-07-02 15:54:09,526 - src.models.classifier - INFO - Initialized DenseNet121 backbone with random weights
 2026-07-02 15:54:09,531 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-02 15:54:48,662 - __main__ - INFO - Launching Streamlit web interface...
