@@ -2,6 +2,7 @@ import streamlit as st
 import json
 import io
 from app.utils.api import generate_report
+from app.components.charts import create_risk_gauge, create_probabilities_bar_chart
 from app.components.cards import render_prediction_card
 from app.components.charts import render_probability_bars
 
@@ -44,14 +45,21 @@ def render_results(token):
         
     with col_right:
         pred_class = pred_data.get("prediction", "N/A")
-        pred_conf = pred_data.get("confidence", 0.0) * 100
+        pred_conf = pred_data.get("confidence", 0.0)
         r_level = pred_data.get("risk_level", "Unknown")
+        risk_score = pred_data.get("risk_score", 0.0)
         
-        render_prediction_card(pred_class, pred_conf, r_level)
+        # We can use the gauge for risk score
+        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
+        st.plotly_chart(create_risk_gauge(risk_score, r_level), use_container_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
         
+        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
+        st.markdown("#### Class Probabilities")
         probs = pred_data.get("probabilities", {})
         if probs:
-            render_probability_bars(probs)
+            st.plotly_chart(create_probabilities_bar_chart(probs), use_container_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
             
         st.markdown('<div class="premium-card">', unsafe_allow_html=True)
         st.markdown("<h4 style='color: #1e3a8a; margin-bottom: 10px;'>Clinical Recommendation</h4>", unsafe_allow_html=True)

@@ -18,6 +18,8 @@ from app.views.processing import render_processing
 from app.views.results import render_results
 from app.views.history import render_history
 from app.views.settings import render_settings
+from app.views.analytics import render_analytics
+from app.views.profile import render_profile
 
 st.set_page_config(
     page_title="LungAI Diagnostics",
@@ -74,8 +76,12 @@ def main():
             render_processing(st.session_state["token"])
         elif current_view == "Results":
             render_results(st.session_state["token"])
-        elif current_view == "Prediction History":
+        elif current_view == "History":
             render_history(st.session_state["token"])
+        elif current_view == "Analytics":
+            render_analytics(st.session_state["token"])
+        elif current_view == "Profile":
+            render_profile(st.session_state["token"])
         elif current_view == "Settings":
             render_settings()
     except Exception as e:

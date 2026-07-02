@@ -17,9 +17,9 @@ def render_sidebar(backend_ok=True):
         
         selected = option_menu(
             menu_title="Navigation",
-            options=["Dashboard", "Upload CT Scan", "Prediction History", "Settings"],
-            icons=["grid", "cloud-arrow-up", "clock-history", "gear"],
-            menu_icon="compass",
+            options=["Dashboard", "Upload CT Scan", "Results", "History", "Analytics", "Profile", "Settings"],
+            icons=["house", "cloud-upload", "clipboard-data", "clock-history", "bar-chart", "person", "gear"],
+            menu_icon="cast",
             default_index=0,
             styles={
                 "container": {"padding": "0!important", "background-color": "transparent"},
