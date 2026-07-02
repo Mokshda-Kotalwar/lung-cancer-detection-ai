@@ -65,15 +65,22 @@ def render_results(token):
         if st.session_state["pdf_report"] is None:
             if st.button("Generate PDF Report", use_container_width=True):
                 with st.spinner("Compiling clinical report..."):
-                    img_byte_arr = io.BytesIO()
-                    res["original_image"].save(img_byte_arr, format='PNG')
-                    img_bytes = img_byte_arr.getvalue()
+                    uploaded_file = st.session_state.get("current_upload")
+                    if uploaded_file:
+                        uploaded_file.seek(0)
+                        img_bytes = uploaded_file.getvalue()
+                        filename = uploaded_file.name
+                    else:
+                        img_byte_arr = io.BytesIO()
+                        res["original_image"].save(img_byte_arr, format='PNG')
+                        img_bytes = img_byte_arr.getvalue()
+                        filename = "scan.png"
                     
                     pt_data_copy = pt_data.copy()
                     if hasattr(pt_data_copy["study_date"], "strftime"):
                         pt_data_copy["study_date"] = pt_data_copy["study_date"].strftime("%Y-%m-%d")
                         
-                    pdf_res = generate_report(token, img_bytes, "scan.png", pt_data_copy)
+                    pdf_res = generate_report(token, img_bytes, filename, pt_data_copy)
                     
                     if pdf_res and pdf_res.status_code == 200:
                         st.session_state["pdf_report"] = pdf_res.content

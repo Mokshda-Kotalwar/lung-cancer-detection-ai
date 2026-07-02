@@ -43,10 +43,11 @@ class GradCAM:
             self.activations = output.detach().clone()
             
             # Register a hook on the activation tensor directly to capture gradients
-            def tensor_backward_hook(grad):
-                self.gradients = grad.detach().clone()
-                
-            output.register_hook(tensor_backward_hook)
+            if output.requires_grad:
+                def tensor_backward_hook(grad):
+                    self.gradients = grad.detach().clone()
+                    
+                output.register_hook(tensor_backward_hook)
         
         # Find target layer
         for name, module in self.model.named_modules():

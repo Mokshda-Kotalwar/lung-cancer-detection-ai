@@ -150,14 +150,37 @@ def apply_custom_css():
         /* Secondary Button (Warning/Danger) Removed to prevent white-on-white text */
         
         /* Input Fields */
-        .stTextInput>div>div>input {
+        .stTextInput>div>div>input, .stNumberInput>div>div>input, .stSelectbox>div>div>div {
             border-radius: 8px;
             border: 1px solid #cbd5e1;
             padding: 10px;
+            background-color: #ffffff;
         }
-        .stTextInput>div>div>input:focus {
+        .stTextInput>div>div>input:focus, .stNumberInput>div>div>input:focus {
             border-color: #1e3a8a;
             box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.2);
+        }
+
+        /* Expander */
+        .streamlit-expanderHeader {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            color: #1e3a8a;
+            font-weight: 600;
+        }
+        
+        /* Dataframes */
+        [data-testid="stDataFrame"] {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Progress Bar */
+        .stProgress > div > div > div > div {
+            background-color: #0f766e;
         }
         </style>
     """, unsafe_allow_html=True)
