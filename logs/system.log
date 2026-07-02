@@ -286,3 +286,5 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2026-07-02 16:01:59,686 - src.reporting - INFO - PDF report generated: C:\Users\Admin\AppData\Local\Temp\tmph84qjto9.pdf
 2026-07-02 16:02:19,595 - src.models.classifier - INFO - Initialized DenseNet121 backbone with random weights
 2026-07-02 16:02:19,599 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-02 16:02:33,045 - src.models.classifier - INFO - Initialized DenseNet121 backbone with random weights
+2026-07-02 16:02:33,051 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
