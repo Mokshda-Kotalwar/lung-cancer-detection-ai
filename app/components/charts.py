@@ -1,9 +1,15 @@
+import streamlit as st
+import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
-import streamlit as st
 
+
+# ----------------------------------------------------
+# Theme Colors
+# ----------------------------------------------------
 def get_theme_colors():
     is_dark = st.session_state.get("theme", "Light (Default)") == "Dark"
+
     return {
         "bg": "#1e293b" if is_dark else "#ffffff",
         "text": "#f8fafc" if is_dark else "#0f172a",
@@ -11,137 +17,198 @@ def get_theme_colors():
         "grid": "#334155" if is_dark else "#e2e8f0"
     }
 
+
+# ----------------------------------------------------
+# Risk Gauge
+# ----------------------------------------------------
 def create_risk_gauge(risk_score, risk_level):
-    """Creates a beautiful risk gauge chart."""
+
     colors = get_theme_colors()
-    
-    # Determine color based on level
+
     if risk_level == "Low Risk":
-        bar_color = "#10b981" # green
+        bar_color = "#10b981"
+
     elif risk_level == "Moderate Risk":
-        bar_color = "#f59e0b" # yellow/orange
+        bar_color = "#f59e0b"
+
     else:
-        bar_color = "#ef4444" # red
-        
-    fig = go.Figure(go.Indicator(
-        mode = "gauge+number",
-        value = risk_score * 100,
-        domain = {'x': [0, 1], 'y': [0, 1]},
-        title = {'text': "Risk Score", 'font': {'size': 24, 'color': colors['text'], 'family': 'Outfit'}},
-        number = {'suffix': "%", 'font': {'color': colors['text'], 'family': 'Outfit'}},
-        gauge = {
-            'axis': {'range': [None, 100], 'tickwidth': 1, 'tickcolor': colors['grid']},
-            'bar': {'color': bar_color},
-            'bgcolor': "rgba(0,0,0,0)",
-            'borderwidth': 2,
-            'bordercolor': colors['grid'],
-            'steps': [
-                {'range': [0, 33], 'color': 'rgba(16, 185, 129, 0.1)'},
-                {'range': [33, 66], 'color': 'rgba(245, 158, 11, 0.1)'},
-                {'range': [66, 100], 'color': 'rgba(239, 68, 68, 0.1)'}
-            ],
-            'threshold': {
-                'line': {'color': "red", 'width': 4},
-                'thickness': 0.75,
-                'value': risk_score * 100
+        bar_color = "#ef4444"
+
+    fig = go.Figure(
+        go.Indicator(
+            mode="gauge+number",
+            value=risk_score * 100,
+            number={"suffix": "%"},
+            title={"text": "Risk Score"},
+            gauge={
+                "axis": {"range": [0, 100]},
+                "bar": {"color": bar_color},
+                "bgcolor": "rgba(0,0,0,0)",
+                "steps": [
+                    {"range": [0, 33], "color": "rgba(16,185,129,0.15)"},
+                    {"range": [33, 66], "color": "rgba(245,158,11,0.15)"},
+                    {"range": [66, 100], "color": "rgba(239,68,68,0.15)"}
+                ],
             }
-        }
-    ))
-    
+        )
+    )
+
     fig.update_layout(
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        font={'color': colors['text'], 'family': 'Outfit'},
+        height=260,
         margin=dict(l=20, r=20, t=50, b=20),
-        height=250
+        paper_bgcolor="rgba(0,0,0,0)",
+        font=dict(color=colors["text"])
     )
+
     return fig
 
+
+# ----------------------------------------------------
+# Probability Bar Chart
+# ----------------------------------------------------
 def create_probabilities_bar_chart(probabilities):
-    """Creates a horizontal bar chart for class probabilities."""
+
     colors = get_theme_colors()
-    
+
     labels = list(probabilities.keys())
-    values = [val * 100 for val in probabilities.values()]
-    
-    # Sort for better visualization
-    sorted_pairs = sorted(zip(labels, values), key=lambda x: x[1])
-    sorted_labels = [p[0] for p in sorted_pairs]
-    sorted_values = [p[1] for p in sorted_pairs]
-    
-    fig = go.Figure(go.Bar(
-        x=sorted_values,
-        y=sorted_labels,
-        orientation='h',
-        marker=dict(
-            color=colors['primary'],
-            line=dict(color=colors['primary'], width=1)
-        )
-    ))
-    
-    fig.update_layout(
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        font={'color': colors['text'], 'family': 'Outfit'},
-        margin=dict(l=10, r=10, t=10, b=10),
-        height=200,
-        xaxis=dict(
-            showgrid=True,
-            gridcolor=colors['grid'],
-            range=[0, 100],
-            title="Probability (%)"
-        ),
-        yaxis=dict(
-            showgrid=False
-        )
+    values = [v * 100 for v in probabilities.values()]
+
+    fig = px.bar(
+        x=values,
+        y=labels,
+        orientation="h",
+        text=[f"{v:.1f}%" for v in values],
     )
+
+    fig.update_traces(marker_color=colors["primary"])
+
+    fig.update_layout(
+        xaxis_title="Probability (%)",
+        yaxis_title="",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        height=260,
+        margin=dict(l=10, r=10, t=20, b=20),
+        font=dict(color=colors["text"])
+    )
+
     return fig
 
-def create_trend_chart(dates, values, title="Trends"):
-    """Creates a line chart for historical trends."""
+
+# ----------------------------------------------------
+# Trend Chart
+# ----------------------------------------------------
+def create_trend_chart(dates, values, title="Prediction Trend"):
+
     colors = get_theme_colors()
-    
-    fig = go.Figure(go.Scatter(
-        x=dates, 
+
+    fig = px.line(
+        x=dates,
         y=values,
-        mode='lines+markers',
-        line=dict(color=colors['primary'], width=3),
-        marker=dict(size=8, color=colors['primary'], line=dict(width=2, color=colors['bg'])),
-        fill='tozeroy',
-        fillcolor=f"{colors['primary']}33" # 20% opacity
-    ))
-    
-    fig.update_layout(
-        title=dict(text=title, font=dict(color=colors['text'], family='Outfit')),
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        font={'color': colors['text'], 'family': 'Outfit'},
-        xaxis=dict(showgrid=True, gridcolor=colors['grid']),
-        yaxis=dict(showgrid=True, gridcolor=colors['grid']),
-        margin=dict(l=40, r=20, t=40, b=30),
-        height=300
+        markers=True
     )
+
+    fig.update_traces(
+        line=dict(width=3)
+    )
+
+    fig.update_layout(
+        title=title,
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        height=320,
+        font=dict(color=colors["text"])
+    )
+
     return fig
 
-def create_distribution_donut(labels, values, title="Distribution"):
-    """Creates a donut chart for categorical distributions."""
+
+# ----------------------------------------------------
+# Donut Chart
+# ----------------------------------------------------
+def create_distribution_donut(labels, values, title="Prediction Distribution"):
+
     colors = get_theme_colors()
-    
-    fig = go.Figure(data=[go.Pie(
-        labels=labels, 
-        values=values, 
-        hole=.6,
-        marker=dict(colors=["#10b981", "#f59e0b", "#ef4444"])
-    )])
-    
-    fig.update_layout(
-        title=dict(text=title, font=dict(color=colors['text'], family='Outfit')),
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        font={'color': colors['text'], 'family': 'Outfit'},
-        margin=dict(l=20, r=20, t=40, b=20),
-        height=300,
-        showlegend=True,
-        legend=dict(orientation="h", yanchor="bottom", y=-0.2, xanchor="center", x=0.5)
+
+    fig = go.Figure(
+        data=[
+            go.Pie(
+                labels=labels,
+                values=values,
+                hole=0.6
+            )
+        ]
     )
+
+    fig.update_layout(
+        title=title,
+        height=320,
+        paper_bgcolor="rgba(0,0,0,0)",
+        font=dict(color=colors["text"])
+    )
+
     return fig
+
+
+# ----------------------------------------------------
+# Prediction History Chart
+# ----------------------------------------------------
+def render_history_chart(history_data):
+    """
+    Displays prediction history chart.
+
+    Expected format:
+
+    [
+        {
+            "prediction":"Normal"
+        },
+        {
+            "prediction":"Benign"
+        },
+        {
+            "prediction":"Malignant"
+        }
+    ]
+    """
+
+    if history_data is None or len(history_data) == 0:
+        st.info("No prediction history available.")
+        return
+
+    df = pd.DataFrame(history_data)
+
+    if "prediction" not in df.columns:
+        st.warning("Prediction field not found.")
+        return
+
+    counts = (
+        df["prediction"]
+        .value_counts()
+        .reset_index()
+    )
+
+    counts.columns = [
+        "Prediction",
+        "Count"
+    ]
+
+    fig = px.bar(
+        counts,
+        x="Prediction",
+        y="Count",
+        color="Prediction",
+        text="Count",
+        title="Prediction History"
+    )
+
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        height=420
+    )
+
+    st.plotly_chart(
+        fig,
+        use_container_width=True
+    )
