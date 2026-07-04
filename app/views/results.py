@@ -3,8 +3,6 @@ import json
 import io
 from app.utils.api import generate_report
 from app.components.charts import create_risk_gauge, create_probabilities_bar_chart
-from app.components.cards import render_prediction_card
-from app.components.charts import render_probability_bars
 
 def render_results(token):
     """Renders the prediction results and Grad-CAM view."""
