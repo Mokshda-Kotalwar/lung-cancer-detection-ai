@@ -299,3 +299,14 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2026-07-02 16:38:56,311 - src.models.classifier - INFO - Initialized DenseNet121 backbone with random weights
 2026-07-02 16:38:56,318 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
 2026-07-04 13:49:01,969 - __main__ - INFO - Launching Streamlit web interface...
+2026-07-04 13:53:57,366 - __main__ - INFO - Launching Streamlit web interface...
+2026-07-04 13:54:54,607 - src.models.classifier - INFO - Initialized DenseNet121 backbone with random weights
+2026-07-04 13:54:54,611 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-04 13:56:13,703 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-04 13:56:52,258 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-04 13:56:58,357 - src.reporting - INFO - ReportLab loaded successfully
+2026-07-04 13:56:59,450 - src.reporting - INFO - PDF report generated: C:\Users\Admin\AppData\Local\Temp\tmp4x_8aga2.pdf
+2026-07-04 17:14:45,627 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-04 17:15:09,911 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-04 17:15:16,331 - src.reporting - INFO - ReportLab loaded successfully
+2026-07-04 17:15:18,723 - src.reporting - INFO - PDF report generated: C:\Users\Admin\AppData\Local\Temp\tmp_req2rty.pdf
