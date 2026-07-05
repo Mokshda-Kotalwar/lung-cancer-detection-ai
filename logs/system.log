@@ -337,3 +337,15 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2026-07-05 21:03:03,270 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
 2026-07-05 21:06:18,467 - src.models.classifier - INFO - Initialized DenseNet121 backbone with random weights
 2026-07-05 21:06:18,474 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-05 21:06:35,384 - src.models.classifier - INFO - Initialized DenseNet121 backbone with random weights
+2026-07-05 21:06:35,389 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-05 21:07:50,782 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-05 21:08:22,402 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-05 21:08:28,445 - src.reporting - INFO - ReportLab loaded successfully
+2026-07-05 21:08:29,191 - src.reporting - INFO - PDF report generated: C:\Users\Admin\AppData\Local\Temp\tmp_o7thcoc.pdf
+2026-07-05 21:09:13,804 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-05 21:09:18,527 - src.reporting - INFO - ReportLab loaded successfully
+2026-07-05 21:09:19,296 - src.reporting - INFO - PDF report generated: C:\Users\Admin\AppData\Local\Temp\tmp7lpo17y3.pdf
+2026-07-05 21:09:31,140 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-05 21:09:36,032 - src.reporting - INFO - ReportLab loaded successfully
+2026-07-05 21:09:36,838 - src.reporting - INFO - PDF report generated: C:\Users\Admin\AppData\Local\Temp\tmpgsd77sii.pdf
