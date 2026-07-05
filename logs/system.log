@@ -310,3 +310,17 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2026-07-04 17:15:09,911 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
 2026-07-04 17:15:16,331 - src.reporting - INFO - ReportLab loaded successfully
 2026-07-04 17:15:18,723 - src.reporting - INFO - PDF report generated: C:\Users\Admin\AppData\Local\Temp\tmp_req2rty.pdf
+2026-07-05 19:49:34,458 - src.models.classifier - INFO - Initialized DenseNet121 backbone with random weights
+2026-07-05 19:49:34,467 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-05 19:49:49,983 - __main__ - INFO - Launching Streamlit web interface...
+2026-07-05 19:51:23,566 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-05 19:51:52,017 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-05 19:51:58,542 - src.reporting - INFO - ReportLab loaded successfully
+2026-07-05 19:52:04,500 - src.reporting - INFO - PDF report generated: C:\Users\Admin\AppData\Local\Temp\tmpkd19z152.pdf
+2026-07-05 20:18:51,415 - src.models.classifier - INFO - Initialized DenseNet121 backbone with random weights
+2026-07-05 20:18:51,420 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-05 20:27:59,575 - src.models.classifier - INFO - Initialized DenseNet121 backbone with random weights
+2026-07-05 20:27:59,585 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-05 20:28:20,752 - __main__ - INFO - Launching Streamlit web interface...
+2026-07-05 20:38:07,191 - src.models.classifier - INFO - Initialized DenseNet121 backbone with random weights
+2026-07-05 20:38:07,205 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes

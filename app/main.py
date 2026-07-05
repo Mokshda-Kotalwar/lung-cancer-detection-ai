@@ -1,6 +1,6 @@
 import streamlit as st
-import os
 import sys
+import traceback
 from pathlib import Path
 
 # Add project root to path
@@ -21,71 +21,112 @@ from app.views.settings import render_settings
 from app.views.analytics import render_analytics
 from app.views.profile import render_profile
 
+
 st.set_page_config(
     page_title="LungAI Diagnostics",
     page_icon="🫁",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
 )
 
+
 def init_session_state():
-    """Initializes session state variables."""
-    if "token" not in st.session_state:
-        st.session_state["token"] = None
-    if "active_view" not in st.session_state:
-        st.session_state["active_view"] = "Dashboard"
+    """Initialize session state."""
+
+    defaults = {
+        "token": None,
+        "active_view": "Dashboard",
+    }
+
+    for key, value in defaults.items():
+        if key not in st.session_state:
+            st.session_state[key] = value
+
 
 def main():
+
     apply_custom_css()
     init_session_state()
 
-    # Authentication Route
-    if not st.session_state["token"]:
+    # Login
+    if st.session_state.token is None:
         render_login()
         return
 
-    # Authenticated Routes
     backend_ok = check_backend_health()
-    selected_view = render_sidebar(backend_ok)
-    
-    # Check if we have an overriding active view from an action (e.g., Upload -> Processing -> Results)
-    if "active_view" in st.session_state and st.session_state["active_view"] in ["Processing", "Results"]:
-        current_view = st.session_state["active_view"]
-    else:
-        current_view = selected_view
-        st.session_state["active_view"] = current_view
-        
-    # Top Navigation Mock
-    col1, col2, col3 = st.columns([6, 1, 1])
-    with col1:
-        st.markdown(f"<div style='padding-top: 10px; color: #64748b; font-weight: 500;'>LungAI Platform / <span style='color: #1e3a8a;'>{current_view}</span></div>", unsafe_allow_html=True)
-    with col2:
-        st.markdown("<div style='text-align: right; padding-top: 10px;'><span style='font-size: 1.2em;'>🔔</span></div>", unsafe_allow_html=True)
-    with col3:
-        st.markdown("<div style='text-align: right; padding-top: 10px;'><span style='font-size: 1.2em;'>⚙️</span></div>", unsafe_allow_html=True)
-        
-    st.markdown("<div style='margin-bottom: 20px;'></div>", unsafe_allow_html=True)
 
-    # Route Rendering
+    # Sidebar handles navigation
+    current_view = render_sidebar(backend_ok)
+
+    # Preserve automatic page flow
+    if st.session_state.active_view in ["Processing", "Results"]:
+        current_view = st.session_state.active_view
+
+    # Top Header
+    col1, col2, col3 = st.columns([6, 1, 1])
+
+    with col1:
+        st.markdown(
+            f"""
+            <div style="
+                padding-top:10px;
+                color:#64748b;
+                font-weight:500;
+                font-size:15px;
+            ">
+                LungAI Platform /
+                <span style="color:#1e3a8a;">
+                    {current_view}
+                </span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    with col2:
+        st.markdown(
+            "<div style='text-align:right;padding-top:10px;'>🔔</div>",
+            unsafe_allow_html=True,
+        )
+
+    with col3:
+        st.markdown(
+            "<div style='text-align:right;padding-top:10px;'>⚙️</div>",
+            unsafe_allow_html=True,
+        )
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # Routing
     try:
+
         if current_view == "Dashboard":
-            render_dashboard(st.session_state["token"])
+            render_dashboard(st.session_state.token)
+
         elif current_view == "Upload CT Scan":
-            render_upload(st.session_state["token"])
+            render_upload(st.session_state.token)
+
         elif current_view == "Processing":
-            render_processing(st.session_state["token"])
+            render_processing(st.session_state.token)
+
         elif current_view == "Results":
-            render_results(st.session_state["token"])
+            render_results(st.session_state.token)
+
         elif current_view == "History":
-            render_history(st.session_state["token"])
+            render_history(st.session_state.token)
+
         elif current_view == "Analytics":
-            render_analytics(st.session_state["token"])
+            render_analytics(st.session_state.token)
+
         elif current_view == "Profile":
-            render_profile(st.session_state["token"])
+            render_profile(st.session_state.token)
+
         elif current_view == "Settings":
             render_settings()
-    except Exception as e:
-        st.error(f"An error occurred while rendering the view: {e}")
+
+    except Exception:
+        st.exception(traceback.format_exc())
+
 
 if __name__ == "__main__":
     main()
