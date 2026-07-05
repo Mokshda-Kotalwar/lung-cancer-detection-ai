@@ -1,5 +1,3 @@
-import token
-
 import streamlit as st
 import time
 import io
@@ -60,7 +58,15 @@ def render_processing(token):
 
         try:
             res = run_prediction(token, image_bytes, uploaded_file.name, pt_data_copy)
-            if res.status_code == 200:
+
+            # Debug prints (kept minimal)
+            print("STATUS:", getattr(res, "status_code", None))
+            try:
+                print("RESPONSE:", res.json())
+            except Exception:
+                print("TEXT:", getattr(res, "text", None))
+
+            if getattr(res, "status_code", None) == 200:
                 pred_data = res.json()
 
                 # Fetch GradCAM
@@ -88,7 +94,7 @@ def render_processing(token):
                 st.session_state["active_view"] = "Results"
                 st.rerun()
             else:
-                st.error(f"Backend error: {res.text}")
+                st.error(f"Backend error: {getattr(res, 'text', str(res))}")
                 if st.button("Return to Upload"):
                     st.session_state["active_view"] = "Upload CT Scan"
                     st.rerun()
