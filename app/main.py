@@ -17,9 +17,9 @@ from app.views.upload import render_upload
 from app.views.processing import render_processing
 from app.views.results import render_results
 from app.views.history import render_history
-from app.views.settings import render_settings
 from app.views.analytics import render_analytics
 from app.views.profile import render_profile
+from app.views.settings import render_settings
 
 
 st.set_page_config(
@@ -31,16 +31,14 @@ st.set_page_config(
 
 
 def init_session_state():
-    """Initialize session state."""
-
     defaults = {
         "token": None,
         "active_view": "Dashboard",
     }
 
-    for key, value in defaults.items():
-        if key not in st.session_state:
-            st.session_state[key] = value
+    for k, v in defaults.items():
+        if k not in st.session_state:
+            st.session_state[k] = v
 
 
 def main():
@@ -55,25 +53,22 @@ def main():
 
     backend_ok = check_backend_health()
 
-    # Sidebar handles navigation
-    current_view = render_sidebar(backend_ok)
-
-    # Preserve automatic page flow
+    # Internal pages should bypass sidebar selection
     if st.session_state.active_view in ["Processing", "Results"]:
         current_view = st.session_state.active_view
+        render_sidebar(backend_ok)  # only for display
+    else:
+        current_view = render_sidebar(backend_ok)
+        st.session_state.active_view = current_view
 
-    # Top Header
+    # ---------------- Header ---------------- #
+
     col1, col2, col3 = st.columns([6, 1, 1])
 
     with col1:
         st.markdown(
             f"""
-            <div style="
-                padding-top:10px;
-                color:#64748b;
-                font-weight:500;
-                font-size:15px;
-            ">
+            <div style="padding-top:10px;color:#64748b;font-weight:500;">
                 LungAI Platform /
                 <span style="color:#1e3a8a;">
                     {current_view}
@@ -97,7 +92,8 @@ def main():
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Routing
+    # ---------------- Routing ---------------- #
+
     try:
 
         if current_view == "Dashboard":
@@ -123,6 +119,9 @@ def main():
 
         elif current_view == "Settings":
             render_settings()
+
+        else:
+            st.error(f"Unknown page: {current_view}")
 
     except Exception:
         st.exception(traceback.format_exc())

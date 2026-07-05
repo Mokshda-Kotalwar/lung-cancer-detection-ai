@@ -74,10 +74,10 @@ def render_dashboard(token):
     )
 
     high_risk_scans = sum(
-        1
-        for r in history_data
-        if "High" in r.get("risk_level", "")
-    )
+    1
+    for r in history_data
+    if "High" in str(r.get("risk_level") or "")
+)
 
     # ---------------------------------------------------------
     # KPI Cards

@@ -4,9 +4,8 @@ from app.utils.styles import render_badge
 
 
 def render_sidebar(backend_ok=True):
-    """Renders the main navigation sidebar."""
+    """Render sidebar navigation."""
 
-    # Navigation options
     pages = [
         "Dashboard",
         "Upload CT Scan",
@@ -27,19 +26,23 @@ def render_sidebar(backend_ok=True):
         "gear",
     ]
 
-    # Initialize session state only once
+    # Initialize session state
     if "active_view" not in st.session_state:
         st.session_state.active_view = "Dashboard"
+
+    # Processing is an internal page, not part of sidebar
+    current_page = st.session_state.active_view
+
+    if current_page not in pages:
+        current_page = "Upload CT Scan"
 
     with st.sidebar:
 
         st.markdown(
             """
-            <div style="text-align:center; margin-bottom:25px;">
-                <h2 style="color:#1e3a8a; margin-bottom:0;">
-                    🫁 LungAI
-                </h2>
-                <p style="color:#64748b; font-size:0.9rem; margin-top:4px;">
+            <div style="text-align:center;margin-bottom:25px;">
+                <h2 style="color:#1e3a8a;margin-bottom:0;">🫁 LungAI</h2>
+                <p style="color:#64748b;font-size:0.9rem;margin-top:4px;">
                     Clinical Decision Support
                 </p>
             </div>
@@ -52,12 +55,8 @@ def render_sidebar(backend_ok=True):
             options=pages,
             icons=icons,
             menu_icon="cast",
-
-            # Remember the last selected page
-            default_index=pages.index(st.session_state.active_view),
-
+            default_index=pages.index(current_page),
             key="main_navigation",
-
             styles={
                 "container": {
                     "padding": "0!important",
@@ -84,8 +83,9 @@ def render_sidebar(backend_ok=True):
             },
         )
 
-        # Save selected page
-        st.session_state.active_view = selected
+        # Only update active_view if we're not inside internal pages
+        if st.session_state.active_view not in ["Processing"]:
+            st.session_state.active_view = selected
 
         st.divider()
 
@@ -114,12 +114,7 @@ def render_sidebar(backend_ok=True):
 
         st.divider()
 
-        if st.button(
-            "🚪 Log Out",
-            use_container_width=True,
-            type="secondary",
-        ):
-            # Clear all session data
+        if st.button("🚪 Log Out", use_container_width=True):
             st.session_state.clear()
             st.rerun()
 
