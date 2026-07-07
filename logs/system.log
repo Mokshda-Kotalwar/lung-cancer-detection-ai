@@ -349,3 +349,6 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2026-07-05 21:09:31,140 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
 2026-07-05 21:09:36,032 - src.reporting - INFO - ReportLab loaded successfully
 2026-07-05 21:09:36,838 - src.reporting - INFO - PDF report generated: C:\Users\Admin\AppData\Local\Temp\tmpgsd77sii.pdf
+2026-07-07 10:34:06,617 - src.models.classifier - INFO - Initialized DenseNet121 backbone with random weights
+2026-07-07 10:34:06,624 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-07 10:34:16,288 - __main__ - INFO - Launching Streamlit web interface...
