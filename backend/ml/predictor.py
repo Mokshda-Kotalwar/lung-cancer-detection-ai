@@ -1,14 +1,19 @@
-import torch
-from torchvision import transforms
-from PIL import Image
+import os
 import io
 import logging
+from pathlib import Path
+
 import cv2
 import numpy as np
-from src.models.classifier import DenseNetClassifier
-from src.xai import GradCAM
-from src.risk import RiskScorer
+import torch
+from PIL import Image
+from torchvision import transforms
+
+from backend.core.config import settings
 from config import config
+from src.models.classifier import DenseNetClassifier
+from src.risk import RiskScorer
+from src.xai import GradCAM
 
 logger = logging.getLogger(__name__)
 
@@ -17,19 +22,53 @@ class LungCancerPredictor:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.num_classes = 3
         self.class_names = ["Benign", "Malignant", "Uncertain"]
-        
+
+        resolved_model_path = self._resolve_model_path(model_path)
+        self.model_path = resolved_model_path
+
         self.model = DenseNetClassifier(num_classes=self.num_classes, pretrained=False)
-        
-        if model_path:
+
+        if resolved_model_path:
             try:
-                state_dict = torch.load(model_path, map_location=self.device)
+                state_dict = torch.load(resolved_model_path, map_location=self.device)
                 self.model.load_state_dict(state_dict)
-                logger.info(f"Loaded model weights from {model_path}")
+                logger.info(f"Loaded model weights from {resolved_model_path}")
             except Exception as e:
-                logger.warning(f"Failed to load model weights from {model_path}: {e}. Using random weights.")
-                
+                logger.warning(f"Failed to load model weights from {resolved_model_path}: {e}. Using random weights.")
+
         self.model.to(self.device)
         self.model.eval()
+
+    def _resolve_model_path(self, model_path: str = None) -> str | None:
+        candidates = []
+        if model_path:
+            candidates.append(model_path)
+
+        env_path = os.getenv("MODEL_PATH")
+        if env_path:
+            candidates.append(env_path)
+
+        if getattr(settings, "MODEL_PATH", None):
+            candidates.append(settings.MODEL_PATH)
+
+        project_root = Path(__file__).resolve().parents[2]
+        candidates.extend([
+            project_root / "models" / "checkpoints" / "test_densenet.pth",
+            project_root / "models" / "checkpoints" / "best_densenet.pth",
+            project_root / "models" / "checkpoints" / "best_model.pth",
+            project_root / "models" / "checkpoints" / "model.pth",
+        ])
+
+        for candidate in candidates:
+            if candidate is None:
+                continue
+            candidate_path = Path(candidate)
+            if not candidate_path.is_absolute():
+                candidate_path = (project_root / candidate_path).resolve()
+            if candidate_path.exists():
+                return str(candidate_path)
+
+        return None
         
         # Standard ImageNet transforms, as typically used for pretrained models
         self.transform = transforms.Compose([

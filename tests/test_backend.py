@@ -1,6 +1,10 @@
+import os
+
 import pytest
 from fastapi.testclient import TestClient
+
 from backend.main import app
+from backend.ml.predictor import LungCancerPredictor
 
 client = TestClient(app)
 
@@ -25,3 +29,10 @@ def test_history_unauthenticated():
     """Test that accessing history without a JWT token returns 401 Unauthorized"""
     response = client.get("/history/")
     assert response.status_code == 401
+
+
+def test_predictor_uses_saved_checkpoint_by_default():
+    """The backend predictor should resolve and use the saved checkpoint automatically."""
+    predictor = LungCancerPredictor()
+    assert predictor.model_path is not None
+    assert os.path.exists(predictor.model_path)
