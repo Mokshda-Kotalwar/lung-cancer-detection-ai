@@ -123,6 +123,7 @@ class TestGPU:
 
 
 from src.preprocessing import MedicalImagePreprocessor, LungNoduleDataset
+from src.preprocessing.dataset import discover_medical_samples
 
 class TestNewPreprocessingAndDataset:
     """Test the newly implemented pipeline and dataset modules"""
@@ -163,6 +164,13 @@ class TestNewPreprocessingAndDataset:
             assert "image_path" in sample
             assert sample["image"].shape == (3, 512, 512) # duplicated channel dimensions
             assert sample["label"].item() == 1
+
+    def test_discover_real_ct_samples(self):
+        """Ensure real CT-style image files in the data folder are discovered for training."""
+        discovered = discover_medical_samples(Path("data/temp_example"))
+
+        assert len(discovered) > 0
+        assert all(item["path"].exists() for item in discovered)
 
 
 if __name__ == "__main__":

@@ -108,7 +108,8 @@ def discover_medical_samples(
                 break
 
         if label_name is None:
-            continue
+            label_name = "uncertain"
+            label_idx = 2
 
         manifest.append({
             "path": file_path,
@@ -410,7 +411,11 @@ class LungNoduleDataset(Dataset):
                     image = image * ds.RescaleSlope + ds.RescaleIntercept
                 return image
             elif ext == '.npy':
-                return np.load(path).astype(np.float32)
+                arr = np.load(path).astype(np.float32)
+                if arr.ndim > 2:
+                    slice_idx = arr.shape[0] // 2
+                    return arr[slice_idx]
+                return arr
             elif ext in ['.png', '.jpg', '.jpeg']:
                 # Read grayscale image
                 img = cv2.imread(str(path), cv2.IMREAD_GRAYSCALE)

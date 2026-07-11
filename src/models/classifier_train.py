@@ -318,14 +318,17 @@ if __name__ == "__main__":
 
     logger.info("Using available scan images from the project dataset...")
     discovered = []
-    for search_root in [DATA_DIR / "processed", DATA_DIR / "raw", DATA_DIR / "clinical", temp_dir]:
+    for search_root in [DATA_DIR / "processed", DATA_DIR / "raw", DATA_DIR / "clinical", DATA_DIR / "temp_example", DATA_DIR / "temp_classification", DATA_DIR / "temp_3d", temp_dir]:
         discovered.extend(discover_medical_samples(search_root))
 
     image_paths = []
     labels = []
     if discovered:
         for item in discovered:
-            image_paths.append(item["path"])
+            candidate_path = item["path"]
+            if candidate_path.suffix.lower() == ".npy" and candidate_path.name.startswith("mask"):
+                continue
+            image_paths.append(candidate_path)
             labels.append(item["label"])
     else:
         logger.warning("No scan images found; falling back to synthetic scan generation")
