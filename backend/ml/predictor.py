@@ -32,7 +32,7 @@ class LungCancerPredictor:
         resolved_model_path = self._resolve_model_path(model_path)
         self.model_path = resolved_model_path
 
-        self.model = DenseNetClassifier(num_classes=self.num_classes, pretrained=False)
+        self.model = DenseNetClassifier(num_classes=self.num_classes, pretrained=True, freeze_backbone=False)
 
         if resolved_model_path:
             try:
@@ -68,8 +68,8 @@ class LungCancerPredictor:
 
         project_root = Path(__file__).resolve().parents[2]
         candidates.extend([
-            project_root / "models" / "checkpoints" / "test_densenet.pth",
             project_root / "models" / "checkpoints" / "best_densenet.pth",
+            project_root / "models" / "checkpoints" / "test_densenet.pth",
             project_root / "models" / "checkpoints" / "best_model.pth",
             project_root / "models" / "checkpoints" / "model.pth",
         ])

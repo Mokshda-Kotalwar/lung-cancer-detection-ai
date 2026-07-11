@@ -43,9 +43,9 @@ class DenseNetClassifier(nn.Module):
                     logger.info("Loaded pretrained DenseNet121 backbone using legacy pretrained=True")
                 except Exception as e2:
                     logger.warning(f"Failed to load pretrained weights ({e2}), initializing random weights: {e}")
-                    self.backbone = models.densenet121(pretrained=False)
+                    self.backbone = models.densenet121(weights=None)
         else:
-            self.backbone = models.densenet121(pretrained=False)
+            self.backbone = models.densenet121(weights=None)
             logger.info("Initialized DenseNet121 backbone with random weights")
             
         # Freeze backbone parameters if requested

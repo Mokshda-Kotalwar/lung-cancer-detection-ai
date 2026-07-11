@@ -205,6 +205,13 @@ def train_classifier(
     # Using cross entropy loss
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=1e-5)
+
+    # Fine-tune the classifier head more aggressively for this small medical-image task.
+    for name, param in model.named_parameters():
+        if name.startswith("backbone.classifier"):
+            param.requires_grad = True
+        else:
+            param.requires_grad = False
     
     # Scheduler: Reduce learning rate on plateau
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(
@@ -376,16 +383,21 @@ if __name__ == "__main__":
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = DenseNetClassifier(num_classes=3, pretrained=True)
     
-    # Run training for 2 verification epochs
-    train_classifier(
+    # Run a short but meaningful fine-tuning loop on the available images.
+    trained_model = train_classifier(
         model=model,
         train_loader=train_loader,
         val_loader=val_loader,
-        epochs=2,
-        lr=1e-4,
+        epochs=8,
+        lr=1e-3,
         device=device,
         checkpoint_name="test_densenet.pth"
     )
+
+    # Save a second checkpoint name for the frontend runtime.
+    best_path = MODELS_DIR / "checkpoints" / "best_densenet.pth"
+    torch.save(trained_model.state_dict(), best_path)
+    logger.info(f"Saved runtime checkpoint to {best_path}")
     
     # Run Grad-CAM
     run_gradcam_verification(model, device)
