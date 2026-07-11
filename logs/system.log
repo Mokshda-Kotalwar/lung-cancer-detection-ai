@@ -412,3 +412,31 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2026-07-11 18:35:03,319 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
 2026-07-11 18:35:03,325 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
 2026-07-11 18:35:03,426 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth
+2026-07-11 18:50:21,536 - __main__ - INFO - Using available scan images from the project dataset...
+2026-07-11 18:50:21,974 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
+2026-07-11 18:50:21,982 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-11 18:50:22,021 - __main__ - INFO - ================================================================================
+2026-07-11 18:50:22,021 - __main__ - INFO - STARTING Densenet121 LUNG NODULE CLASSIFICATION MODEL TRAINING
+2026-07-11 18:50:22,021 - __main__ - INFO - ================================================================================
+2026-07-11 18:50:34,223 - __main__ - INFO - Epoch [1/8] | Train Loss: 1.3168 | Val Loss: 1.2020 | Val Acc: 0.250 | Val F1: 0.133 | Val Spec: 0.667 | Val AUC: 0.083
+2026-07-11 18:50:34,318 - __main__ - INFO -   --> Saved new best DenseNet checkpoint (F1: 0.133): c:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\test_densenet.pth
+2026-07-11 18:50:35,187 - __main__ - INFO - Saved confusion matrix plot to c:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\plots\confusion_matrix.png
+2026-07-11 18:50:35,650 - __main__ - INFO - Saved ROC curve plot to c:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\plots\roc_curve.png
+2026-07-11 18:50:47,507 - __main__ - INFO - Epoch [2/8] | Train Loss: 1.4442 | Val Loss: 1.2419 | Val Acc: 0.250 | Val F1: 0.133 | Val Spec: 0.667 | Val AUC: 0.167
+2026-07-11 18:50:47,508 - __main__ - INFO - EarlyStopping counter: 1 out of 5
+2026-07-11 18:50:58,349 - __main__ - INFO - Epoch [3/8] | Train Loss: 1.3840 | Val Loss: 1.2905 | Val Acc: 0.250 | Val F1: 0.133 | Val Spec: 0.667 | Val AUC: 0.306
+2026-07-11 18:50:58,349 - __main__ - INFO - EarlyStopping counter: 2 out of 5
+2026-07-11 18:51:09,249 - __main__ - INFO - Epoch [4/8] | Train Loss: 1.5367 | Val Loss: 1.3370 | Val Acc: 0.250 | Val F1: 0.133 | Val Spec: 0.667 | Val AUC: 0.306
+2026-07-11 18:51:09,250 - __main__ - INFO - EarlyStopping counter: 3 out of 5
+2026-07-11 18:51:21,622 - __main__ - INFO - Epoch [5/8] | Train Loss: 1.4428 | Val Loss: 1.3438 | Val Acc: 0.250 | Val F1: 0.133 | Val Spec: 0.667 | Val AUC: 0.306
+2026-07-11 18:51:21,623 - __main__ - INFO - EarlyStopping counter: 4 out of 5
+2026-07-11 18:51:36,849 - __main__ - INFO - Epoch [6/8] | Train Loss: 1.1222 | Val Loss: 1.3902 | Val Acc: 0.250 | Val F1: 0.133 | Val Spec: 0.667 | Val AUC: 0.306
+2026-07-11 18:51:36,850 - __main__ - INFO - EarlyStopping counter: 5 out of 5
+2026-07-11 18:51:36,850 - __main__ - INFO - Early stopping triggered. Training stopped.
+2026-07-11 18:51:36,850 - __main__ - INFO - [SUCCESS] DenseNet121 Classification Training Complete!
+2026-07-11 18:51:37,097 - __main__ - INFO - Saved runtime checkpoint to c:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth
+2026-07-11 18:51:37,147 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-11 18:51:43,191 - __main__ - INFO - Grad-CAM explainability verification completed. Sample saved to c:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\plots\densenet_gradcam_sample.png
+2026-07-11 18:52:07,001 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
+2026-07-11 18:52:07,010 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-11 18:52:07,128 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth
