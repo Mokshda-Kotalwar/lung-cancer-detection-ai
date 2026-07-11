@@ -14,6 +14,66 @@ from typing import Tuple, List, Dict, Optional, Any, Union
 
 logger = logging.getLogger(__name__)
 
+
+def discover_medical_samples(
+    data_root: Union[str, Path],
+    supported_extensions: Optional[Tuple[str, ...]] = None,
+) -> List[Dict[str, Any]]:
+    """Discover CT/medical image samples from labeled folders and return a manifest."""
+    root = Path(data_root)
+    if not root.exists():
+        return []
+
+    if supported_extensions is None:
+        supported_extensions = (".dcm", ".npy", ".png", ".jpg", ".jpeg", ".tif", ".tiff")
+
+    label_mapping = {
+        "benign": 0,
+        "healthy": 0,
+        "normal": 0,
+        "malignant": 1,
+        "cancer": 1,
+        "positive": 1,
+        "uncertain": 2,
+        "unknown": 2,
+        "ambiguous": 2,
+    }
+
+    manifest: List[Dict[str, Any]] = []
+    if root.is_file():
+        if root.suffix.lower() in supported_extensions:
+            manifest.append({"path": root, "label": 2, "label_name": "uncertain"})
+        return manifest
+
+    for file_path in sorted(root.rglob("*")):
+        if not file_path.is_file():
+            continue
+        if file_path.suffix.lower() not in supported_extensions:
+            continue
+
+        label_name = None
+        label_idx = None
+        for parent in [file_path.parent] + list(file_path.parents):
+            if parent == root or parent == parent.parent:
+                break
+            parent_name = parent.name.lower()
+            if parent_name in label_mapping:
+                label_name = parent_name
+                label_idx = label_mapping[parent_name]
+                break
+
+        if label_name is None:
+            continue
+
+        manifest.append({
+            "path": file_path,
+            "label": label_idx,
+            "label_name": label_name,
+        })
+
+    return manifest
+
+
 # Try to import Albumentations and log if it fails
 try:
     import albumentations as A

@@ -440,3 +440,6 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2026-07-11 18:52:07,001 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
 2026-07-11 18:52:07,010 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
 2026-07-11 18:52:07,128 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth
+2026-07-11 19:01:50,444 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
+2026-07-11 19:01:50,462 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-11 19:01:50,696 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth

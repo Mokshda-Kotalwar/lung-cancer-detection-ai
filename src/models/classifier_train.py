@@ -29,7 +29,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from config import config, DATA_DIR, MODELS_DIR, OUTPUTS_DIR
 from src.models.classifier import DenseNetClassifier
-from src.preprocessing.dataset import get_dataloader
+from src.preprocessing.dataset import discover_medical_samples, get_dataloader
 from src.xai import GradCAM
 
 # Setup logging
@@ -317,10 +317,17 @@ if __name__ == "__main__":
     temp_dir.mkdir(parents=True, exist_ok=True)
 
     logger.info("Using available scan images from the project dataset...")
-    image_paths = sorted(temp_dir.glob("scan_*.png"))
-    labels = []
+    discovered = []
+    for search_root in [DATA_DIR / "processed", DATA_DIR / "raw", DATA_DIR / "clinical", temp_dir]:
+        discovered.extend(discover_medical_samples(search_root))
 
-    if not image_paths:
+    image_paths = []
+    labels = []
+    if discovered:
+        for item in discovered:
+            image_paths.append(item["path"])
+            labels.append(item["label"])
+    else:
         logger.warning("No scan images found; falling back to synthetic scan generation")
         import cv2
 
@@ -343,9 +350,10 @@ if __name__ == "__main__":
             cv2.imwrite(str(img_path), img_arr)
             image_paths.append(img_path)
             labels.append(label)
-    else:
-        for idx, _ in enumerate(image_paths):
-            labels.append(idx % 3)
+
+    if len(image_paths) < 8:
+        image_paths = image_paths[:8]
+        labels = labels[:8]
         
     # Setup standard config mock for input_size, batch_size, num_workers
     class MockConfig:

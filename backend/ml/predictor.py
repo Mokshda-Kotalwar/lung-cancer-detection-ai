@@ -12,6 +12,7 @@ from torchvision import transforms
 from backend.core.config import settings
 from config import config
 from src.models.classifier import DenseNetClassifier
+from src.preprocessing.dataset import MedicalImagePreprocessor
 from src.risk import RiskScorer
 from src.xai import GradCAM
 
@@ -23,6 +24,7 @@ class LungCancerPredictor:
         self.num_classes = 3
         self.class_names = ["Benign", "Malignant", "Uncertain"]
 
+        self.preprocessor = MedicalImagePreprocessor(config, is_training=False)
         self.transform = transforms.Compose([
             transforms.Resize((512, 512)),
             transforms.ToTensor(),
@@ -86,9 +88,27 @@ class LungCancerPredictor:
         return None
 
     def _prepare_tensor(self, image_bytes: bytes) -> tuple:
-        image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-        tensor = self.transform(image).unsqueeze(0).to(self.device)
-        return image, tensor
+        image = Image.open(io.BytesIO(image_bytes))
+        image_array = np.array(image.convert("L"))
+
+        if image_array.ndim == 2:
+            processed = self.preprocessor.preprocess_image(image_array.astype(np.float32))
+        else:
+            processed = self.preprocessor.preprocess_image(image_array[:, :, 0].astype(np.float32))
+
+        if processed.ndim == 2:
+            processed_rgb = np.repeat(processed[..., None], 3, axis=2)
+        else:
+            processed_rgb = processed
+
+        processed_rgb = np.clip(processed_rgb, 0.0, 1.0)
+        rgb_image = (processed_rgb * 255.0).astype(np.uint8)
+        if rgb_image.shape[-1] != 3:
+            rgb_image = np.repeat(rgb_image[..., None], 3, axis=2)
+
+        pil_image = Image.fromarray(rgb_image).convert("RGB")
+        tensor = self.transform(pil_image).unsqueeze(0).to(self.device)
+        return pil_image, tensor
 
     def predict(self, image_bytes: bytes, patient_info: dict = None) -> dict:
         try:
@@ -99,6 +119,9 @@ class LungCancerPredictor:
                 probabilities = torch.nn.functional.softmax(outputs, dim=1).squeeze(0)
                 
             confidence, predicted_idx = torch.max(probabilities, 0)
+            confidence_value = float(confidence.item())
+            entropy = -torch.sum(probabilities * torch.log(probabilities + 1e-8)).item()
+            uncertainty = float(entropy / np.log(self.num_classes))
             
             probs_dict = {
                 self.class_names[i]: float(probabilities[i].item())
@@ -132,8 +155,10 @@ class LungCancerPredictor:
             
             return {
                 "prediction": self.class_names[predicted_idx.item()],
-                "confidence": float(confidence.item()),
+                "confidence": confidence_value,
                 "probabilities": probs_dict,
+                "uncertainty": uncertainty,
+                "needs_clinical_review": confidence_value < 0.7 or uncertainty > 0.45,
                 **risk_info
             }
         except Exception as e:
