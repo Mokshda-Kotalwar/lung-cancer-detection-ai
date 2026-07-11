@@ -473,3 +473,31 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2026-07-11 19:07:18,496 - __main__ - INFO - Saved runtime checkpoint to c:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth
 2026-07-11 19:07:18,588 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
 2026-07-11 19:07:24,405 - __main__ - INFO - Grad-CAM explainability verification completed. Sample saved to c:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\plots\densenet_gradcam_sample.png
+2026-07-11 19:32:43,730 - __main__ - INFO - Using available scan images from the project dataset...
+2026-07-11 19:32:43,741 - __main__ - WARNING - No scan images found; falling back to synthetic scan generation
+2026-07-11 19:32:45,445 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
+2026-07-11 19:32:45,466 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-11 19:32:45,523 - __main__ - INFO - ================================================================================
+2026-07-11 19:32:45,523 - __main__ - INFO - STARTING Densenet121 LUNG NODULE CLASSIFICATION MODEL TRAINING
+2026-07-11 19:32:45,524 - __main__ - INFO - ================================================================================
+2026-07-11 19:33:08,380 - __main__ - INFO - Epoch [1/8] | Train Loss: 0.9475 | Val Loss: 1.0302 | Val Acc: 0.500 | Val F1: 0.222 | Val Spec: 0.667 | Val AUC: 0.667
+2026-07-11 19:33:08,630 - __main__ - INFO -   --> Saved new best DenseNet checkpoint (F1: 0.222): c:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\test_densenet.pth
+2026-07-11 19:33:10,863 - __main__ - INFO - Saved confusion matrix plot to c:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\plots\confusion_matrix.png
+2026-07-11 19:33:12,133 - __main__ - INFO - Saved ROC curve plot to c:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\plots\roc_curve.png
+2026-07-11 19:33:35,885 - __main__ - INFO - Epoch [2/8] | Train Loss: 0.8367 | Val Loss: 0.9917 | Val Acc: 0.500 | Val F1: 0.222 | Val Spec: 0.667 | Val AUC: 0.667
+2026-07-11 19:33:54,615 - __main__ - INFO - Epoch [3/8] | Train Loss: 0.7087 | Val Loss: 0.9794 | Val Acc: 0.500 | Val F1: 0.222 | Val Spec: 0.667 | Val AUC: 0.778
+2026-07-11 19:34:07,043 - __main__ - INFO - Epoch [4/8] | Train Loss: 1.4715 | Val Loss: 1.0655 | Val Acc: 0.250 | Val F1: 0.167 | Val Spec: 0.611 | Val AUC: 0.611
+2026-07-11 19:34:07,043 - __main__ - INFO - EarlyStopping counter: 1 out of 5
+2026-07-11 19:34:20,654 - __main__ - INFO - Epoch [5/8] | Train Loss: 0.8264 | Val Loss: 1.2088 | Val Acc: 0.250 | Val F1: 0.133 | Val Spec: 0.667 | Val AUC: 0.611
+2026-07-11 19:34:20,654 - __main__ - INFO - EarlyStopping counter: 2 out of 5
+2026-07-11 19:34:33,461 - __main__ - INFO - Epoch [6/8] | Train Loss: 0.7382 | Val Loss: 1.4563 | Val Acc: 0.250 | Val F1: 0.133 | Val Spec: 0.667 | Val AUC: 0.611
+2026-07-11 19:34:33,462 - __main__ - INFO - EarlyStopping counter: 3 out of 5
+2026-07-11 19:34:47,278 - __main__ - INFO - Epoch [7/8] | Train Loss: 0.4726 | Val Loss: 1.6277 | Val Acc: 0.250 | Val F1: 0.133 | Val Spec: 0.667 | Val AUC: 0.611
+2026-07-11 19:34:47,279 - __main__ - INFO - EarlyStopping counter: 4 out of 5
+2026-07-11 19:34:58,959 - __main__ - INFO - Epoch [8/8] | Train Loss: 0.6003 | Val Loss: 1.6547 | Val Acc: 0.250 | Val F1: 0.133 | Val Spec: 0.667 | Val AUC: 0.611
+2026-07-11 19:34:58,959 - __main__ - INFO - EarlyStopping counter: 5 out of 5
+2026-07-11 19:34:58,960 - __main__ - INFO - Early stopping triggered. Training stopped.
+2026-07-11 19:34:58,960 - __main__ - INFO - [SUCCESS] DenseNet121 Classification Training Complete!
+2026-07-11 19:34:59,157 - __main__ - INFO - Saved runtime checkpoint to c:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth
+2026-07-11 19:34:59,188 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-11 19:35:02,296 - __main__ - INFO - Grad-CAM explainability verification completed. Sample saved to c:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\plots\densenet_gradcam_sample.png
