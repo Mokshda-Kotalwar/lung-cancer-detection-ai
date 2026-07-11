@@ -19,13 +19,58 @@ def discover_medical_samples(
     data_root: Union[str, Path],
     supported_extensions: Optional[Tuple[str, ...]] = None,
 ) -> List[Dict[str, Any]]:
-    """Discover CT/medical image samples from labeled folders and return a manifest."""
+    """Discover CT/medical image samples from labeled folders, manifests, or Excel metadata."""
     root = Path(data_root)
     if not root.exists():
         return []
 
     if supported_extensions is None:
         supported_extensions = (".dcm", ".npy", ".png", ".jpg", ".jpeg", ".tif", ".tiff")
+
+    if root.suffix.lower() in {".csv", ".xlsx", ".xls"}:
+        try:
+            import pandas as pd
+
+            if root.suffix.lower() == ".csv":
+                df = pd.read_csv(root)
+            else:
+                df = pd.read_excel(root)
+
+            manifest: List[Dict[str, Any]] = []
+            for _, row in df.iterrows():
+                path_value = None
+                for key in ["path", "image_path", "file_path", "image", "filepath"]:
+                    if key in df.columns and pd.notna(row.get(key)):
+                        path_value = row.get(key)
+                        break
+
+                if not path_value and "Series Instance UID" in df.columns:
+                    path_value = row.get("Series Instance UID")
+
+                if path_value is None:
+                    continue
+
+                label = row.get("label", row.get("class", row.get("Label", 2)))
+                label_name = row.get("label_name", row.get("class_name", row.get("Label Name", "uncertain")))
+                if isinstance(label_name, str):
+                    label_name = label_name.lower()
+                if label_name in {"benign", "healthy", "normal"}:
+                    label = 0
+                elif label_name in {"malignant", "cancer", "positive"}:
+                    label = 1
+                elif label_name in {"uncertain", "unknown", "ambiguous"}:
+                    label = 2
+
+                manifest.append({
+                    "path": Path(str(path_value)),
+                    "label": int(label),
+                    "label_name": str(label_name),
+                    "metadata": row.to_dict(),
+                })
+            return manifest
+        except Exception as exc:
+            logger.warning(f"Failed to read manifest file {root}: {exc}")
+            return []
 
     label_mapping = {
         "benign": 0,
@@ -72,6 +117,44 @@ def discover_medical_samples(
         })
 
     return manifest
+
+
+def build_lidc_manifest(excel_path: Union[str, Path], output_path: Optional[Union[str, Path]] = None) -> Path:
+    """Convert the LIDC-IDRI workbook metadata into a CSV manifest that the project can use."""
+    import pandas as pd
+
+    excel_path = Path(excel_path)
+    if not excel_path.exists():
+        raise FileNotFoundError(f"Workbook not found: {excel_path}")
+
+    df = pd.read_excel(excel_path)
+    rows = []
+    for _, row in df.iterrows():
+        modality = str(row.get("Modality", "")).strip().upper()
+        if modality != "CT":
+            continue
+        rows.append({
+            "path": "",
+            "label": 2,
+            "label_name": "uncertain",
+            "patient_id": row.get("Patient ID"),
+            "series_uid": row.get("Series Instance UID"),
+            "modality": modality,
+            "study_uid": row.get("Study Instance UID"),
+            "image_count": row.get("Image Count"),
+            "series_description": row.get("Series Description"),
+        })
+
+    manifest_df = pd.DataFrame(rows)
+    if output_path is None:
+        output_path = excel_path.with_suffix(".csv")
+    else:
+        output_path = Path(output_path)
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    manifest_df.to_csv(output_path, index=False)
+    logger.info(f"Wrote LIDC-IDRI manifest with {len(manifest_df)} CT entries to {output_path}")
+    return output_path
 
 
 # Try to import Albumentations and log if it fails
