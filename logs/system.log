@@ -367,3 +367,12 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2026-07-09 20:12:20,474 - src.models.classifier - INFO - Initialized DenseNet121 backbone with random weights
 2026-07-09 20:12:20,482 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
 2026-07-09 20:12:20,621 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\test_densenet.pth
+2026-07-11 18:20:51,476 - src.models.classifier - INFO - Initialized DenseNet121 backbone with random weights
+2026-07-11 18:20:51,489 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-11 18:20:51,761 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\test_densenet.pth
+2026-07-11 18:22:45,101 - src.models.classifier - INFO - Initialized DenseNet121 backbone with random weights
+2026-07-11 18:22:45,121 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-11 18:22:45,555 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\test_densenet.pth
+2026-07-11 18:27:02,449 - src.models.classifier - INFO - Initialized DenseNet121 backbone with random weights
+2026-07-11 18:27:02,456 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-11 18:27:02,652 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\test_densenet.pth

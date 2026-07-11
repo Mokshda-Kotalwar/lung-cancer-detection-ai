@@ -23,6 +23,12 @@ class LungCancerPredictor:
         self.num_classes = 3
         self.class_names = ["Benign", "Malignant", "Uncertain"]
 
+        self.transform = transforms.Compose([
+            transforms.Resize((512, 512)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        ])
+
         resolved_model_path = self._resolve_model_path(model_path)
         self.model_path = resolved_model_path
 
@@ -30,14 +36,23 @@ class LungCancerPredictor:
 
         if resolved_model_path:
             try:
-                state_dict = torch.load(resolved_model_path, map_location=self.device)
-                self.model.load_state_dict(state_dict)
-                logger.info(f"Loaded model weights from {resolved_model_path}")
+                checkpoint = torch.load(resolved_model_path, map_location=self.device)
+                if isinstance(checkpoint, dict) and "state_dict" in checkpoint:
+                    state_dict = checkpoint["state_dict"]
+                elif isinstance(checkpoint, dict) and "model_state_dict" in checkpoint:
+                    state_dict = checkpoint["model_state_dict"]
+                else:
+                    state_dict = checkpoint
+
+                if isinstance(state_dict, dict):
+                    self.model.load_state_dict(state_dict, strict=False)
+                    logger.info(f"Loaded model weights from {resolved_model_path}")
             except Exception as e:
                 logger.warning(f"Failed to load model weights from {resolved_model_path}: {e}. Using random weights.")
 
         self.model.to(self.device)
         self.model.eval()
+        self.risk_scorer = RiskScorer(config)
 
     def _resolve_model_path(self, model_path: str = None) -> str | None:
         candidates = []
@@ -69,15 +84,6 @@ class LungCancerPredictor:
                 return str(candidate_path)
 
         return None
-        
-        # Standard ImageNet transforms, as typically used for pretrained models
-        self.transform = transforms.Compose([
-            transforms.Resize((512, 512)),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-        ])
-        
-        self.risk_scorer = RiskScorer(config)
 
     def _prepare_tensor(self, image_bytes: bytes) -> tuple:
         image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
