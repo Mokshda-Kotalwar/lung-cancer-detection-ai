@@ -443,3 +443,33 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2026-07-11 19:01:50,444 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
 2026-07-11 19:01:50,462 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
 2026-07-11 19:01:50,696 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth
+2026-07-11 19:04:17,258 - __main__ - INFO - Using available scan images from the project dataset...
+2026-07-11 19:04:17,268 - __main__ - WARNING - No scan images found; falling back to synthetic scan generation
+2026-07-11 19:04:19,038 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
+2026-07-11 19:04:19,054 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-11 19:04:19,121 - __main__ - INFO - ================================================================================
+2026-07-11 19:04:19,121 - __main__ - INFO - STARTING Densenet121 LUNG NODULE CLASSIFICATION MODEL TRAINING
+2026-07-11 19:04:19,121 - __main__ - INFO - ================================================================================
+2026-07-11 19:04:49,391 - __main__ - INFO - Epoch [1/8] | Train Loss: 1.2022 | Val Loss: 1.0657 | Val Acc: 0.500 | Val F1: 0.267 | Val Spec: 0.722 | Val AUC: 0.889
+2026-07-11 19:04:49,638 - __main__ - INFO -   --> Saved new best DenseNet checkpoint (F1: 0.267): c:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\test_densenet.pth
+2026-07-11 19:04:53,507 - __main__ - INFO - Saved confusion matrix plot to c:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\plots\confusion_matrix.png
+2026-07-11 19:04:55,440 - __main__ - INFO - Saved ROC curve plot to c:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\plots\roc_curve.png
+2026-07-11 19:05:23,918 - __main__ - INFO - Epoch [2/8] | Train Loss: 0.9701 | Val Loss: 1.0280 | Val Acc: 0.500 | Val F1: 0.267 | Val Spec: 0.722 | Val AUC: 0.778
+2026-07-11 19:05:47,551 - __main__ - INFO - Epoch [3/8] | Train Loss: 0.9311 | Val Loss: 1.0313 | Val Acc: 0.500 | Val F1: 0.267 | Val Spec: 0.722 | Val AUC: 0.556
+2026-07-11 19:05:47,552 - __main__ - INFO - EarlyStopping counter: 1 out of 5
+2026-07-11 19:06:10,252 - __main__ - INFO - Epoch [4/8] | Train Loss: 0.9102 | Val Loss: 1.0603 | Val Acc: 0.500 | Val F1: 0.333 | Val Spec: 0.778 | Val AUC: 0.556
+2026-07-11 19:06:10,563 - __main__ - INFO -   --> Saved new best DenseNet checkpoint (F1: 0.333): c:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\test_densenet.pth
+2026-07-11 19:06:12,039 - __main__ - INFO - Saved confusion matrix plot to c:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\plots\confusion_matrix.png
+2026-07-11 19:06:13,125 - __main__ - INFO - Saved ROC curve plot to c:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\plots\roc_curve.png
+2026-07-11 19:06:13,126 - __main__ - INFO - EarlyStopping counter: 2 out of 5
+2026-07-11 19:06:35,429 - __main__ - INFO - Epoch [5/8] | Train Loss: 0.6481 | Val Loss: 1.0729 | Val Acc: 0.250 | Val F1: 0.222 | Val Spec: 0.667 | Val AUC: 0.556
+2026-07-11 19:06:35,429 - __main__ - INFO - EarlyStopping counter: 3 out of 5
+2026-07-11 19:06:56,750 - __main__ - INFO - Epoch [6/8] | Train Loss: 1.2379 | Val Loss: 1.0834 | Val Acc: 0.250 | Val F1: 0.222 | Val Spec: 0.667 | Val AUC: 0.556
+2026-07-11 19:06:56,751 - __main__ - INFO - EarlyStopping counter: 4 out of 5
+2026-07-11 19:07:18,203 - __main__ - INFO - Epoch [7/8] | Train Loss: 0.6029 | Val Loss: 1.0707 | Val Acc: 0.250 | Val F1: 0.222 | Val Spec: 0.667 | Val AUC: 0.667
+2026-07-11 19:07:18,204 - __main__ - INFO - EarlyStopping counter: 5 out of 5
+2026-07-11 19:07:18,204 - __main__ - INFO - Early stopping triggered. Training stopped.
+2026-07-11 19:07:18,205 - __main__ - INFO - [SUCCESS] DenseNet121 Classification Training Complete!
+2026-07-11 19:07:18,496 - __main__ - INFO - Saved runtime checkpoint to c:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth
+2026-07-11 19:07:18,588 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-11 19:07:24,405 - __main__ - INFO - Grad-CAM explainability verification completed. Sample saved to c:\Users\Admin\Documents\lung-cancer-detection-ai\outputs\plots\densenet_gradcam_sample.png
