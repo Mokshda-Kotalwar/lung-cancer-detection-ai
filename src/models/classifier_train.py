@@ -100,10 +100,15 @@ def compute_evaluation_metrics(all_labels: np.ndarray, all_probs: np.ndarray, cl
         specificities.append(spec)
     specificity = np.mean(specificities)
     
-    # ROC-AUC (ovr macro-averaged)
+    # ROC-AUC (one-vs-rest macro-averaged over the probability matrix)
     try:
-        if len(np.unique(all_labels)) > 1:
-            roc_auc = roc_auc_score(all_labels, all_probs, multi_class='ovr', average='macro')
+        if len(np.unique(all_labels)) > 1 and all_probs.ndim == 2 and all_probs.shape[1] > 1:
+            roc_auc = roc_auc_score(
+                all_labels,
+                all_probs,
+                multi_class='ovr',
+                average='macro',
+            )
         else:
             roc_auc = 0.0
     except Exception as e:
