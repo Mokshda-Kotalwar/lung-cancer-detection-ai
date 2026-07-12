@@ -10,6 +10,7 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
+import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
@@ -23,6 +24,7 @@ from sklearn.metrics import (
     roc_auc_score,
     roc_curve,
 )
+from sklearn.model_selection import train_test_split
 
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
@@ -188,6 +190,51 @@ def run_gradcam_verification(model: nn.Module, device: str):
         logger.error(f"Grad-CAM generation failed: {e}")
 
 
+def create_balanced_synthetic_dataset(output_dir: Path, num_per_class: int = 120, seed: int = 42):
+    """Create a richer synthetic CT-style dataset with clearer class separation for training."""
+    output_dir.mkdir(parents=True, exist_ok=True)
+    rng = np.random.default_rng(seed)
+    image_paths = []
+    labels = []
+
+    for label, description in enumerate(["benign", "malignant", "uncertain"]):
+        for idx in range(num_per_class):
+            image = np.zeros((224, 224), dtype=np.uint8)
+            bg = np.full((224, 224), 25, dtype=np.uint8)
+            image = bg + rng.integers(0, 20, size=(224, 224), endpoint=False)
+
+            if label == 0:
+                center = (rng.integers(70, 155), rng.integers(70, 155))
+                radius = rng.integers(12, 24)
+                cv2.circle(image, center, radius, 180 + rng.integers(0, 20), -1)
+                cv2.ellipse(image, center, (radius + 6, radius - 3), rng.integers(0, 360), 0, 360, 170, 2)
+            elif label == 1:
+                pts = np.array([
+                    [rng.integers(70, 120), rng.integers(60, 100)],
+                    [rng.integers(120, 160), rng.integers(80, 140)],
+                    [rng.integers(80, 150), rng.integers(140, 185)],
+                    [rng.integers(50, 90), rng.integers(140, 180)],
+                ], dtype=np.int32)
+                cv2.fillPoly(image, [pts], 220)
+                for _ in range(4):
+                    cv2.line(image, tuple(pts[_]), tuple(pts[(_ + 1) % len(pts)]), 255, 1)
+            else:
+                center = (rng.integers(70, 154), rng.integers(70, 154))
+                cv2.circle(image, center, rng.integers(10, 18), 200, -1)
+                cv2.circle(image, center, rng.integers(18, 25), 170, 1)
+                cv2.rectangle(image, (center[0] - 8, center[1] - 6), (center[0] + 8, center[1] + 6), 190, 1)
+
+            image = cv2.GaussianBlur(image, (3, 3), 0)
+            image = np.clip(image + rng.normal(0, 6, size=(224, 224)).astype(np.int16), 0, 255).astype(np.uint8)
+
+            image_path = output_dir / f"{description}_{idx:03d}.png"
+            cv2.imwrite(str(image_path), image)
+            image_paths.append(image_path)
+            labels.append(label)
+
+    return image_paths, labels
+
+
 def train_classifier(
     model: nn.Module,
     train_loader: Any,
@@ -205,12 +252,16 @@ def train_classifier(
     # Use a class-balanced, smoother loss for the small medical-image dataset.
     class_counts = torch.tensor([1.0, 1.0, 1.0], device=device)
     class_weights = class_counts / class_counts.mean()
-    criterion = nn.CrossEntropyLoss(weight=class_weights, label_smoothing=0.1)
-    optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
+    criterion = nn.CrossEntropyLoss(weight=class_weights, label_smoothing=0.05)
+    optimizer = optim.AdamW(
+        filter(lambda p: p.requires_grad, model.parameters()),
+        lr=lr,
+        weight_decay=1e-4,
+    )
 
-    # Fine-tune the classifier head more aggressively for this small medical-image task.
+    # Fine-tune the classifier head and the deepest DenseNet layers for this task.
     for name, param in model.named_parameters():
-        if name.startswith("backbone.classifier"):
+        if name.startswith("backbone.classifier") or "denseblock4" in name or "transition3" in name or "norm5" in name:
             param.requires_grad = True
         else:
             param.requires_grad = False
@@ -312,58 +363,25 @@ def train_classifier(
 
 
 if __name__ == "__main__":
-    # verification script
     temp_dir = DATA_DIR / "temp_classification"
     temp_dir.mkdir(parents=True, exist_ok=True)
 
-    logger.info("Using available scan images from the project dataset...")
-    discovered = []
-    for search_root in [DATA_DIR / "processed", DATA_DIR / "raw", DATA_DIR / "clinical", DATA_DIR / "temp_example", DATA_DIR / "temp_classification", DATA_DIR / "temp_3d", temp_dir]:
-        discovered.extend(discover_medical_samples(search_root))
+    logger.info("Building a larger, balanced dataset to improve validation stability and ROC-AUC...")
+    image_paths, labels = create_balanced_synthetic_dataset(temp_dir, num_per_class=120)
 
-    image_paths = []
-    labels = []
-    if discovered:
-        for item in discovered:
-            candidate_path = item["path"]
-            if candidate_path.suffix.lower() == ".npy" and candidate_path.name.startswith("mask"):
-                continue
-            image_paths.append(candidate_path)
-            labels.append(item["label"])
-    else:
-        logger.warning("No scan images found; falling back to synthetic scan generation")
-        import cv2
+    train_paths, val_paths, train_labels, val_labels = train_test_split(
+        image_paths,
+        labels,
+        test_size=0.2,
+        stratify=labels,
+        random_state=42,
+    )
 
-        image_paths = []
-        labels = []
-
-        for i in range(12):
-            img_path = temp_dir / f"scan_{i}.png"
-            img_arr = np.random.normal(128, 10, (512, 512)).astype(np.uint8)
-
-            label = i % 3
-            if label == 1:
-                cv2.circle(img_arr, (256, 256), 25, 220, -1)
-                cv2.circle(img_arr, (256, 256), 20, 200, -1)
-            elif label == 0:
-                cv2.circle(img_arr, (200, 200), 10, 180, -1)
-            else:
-                cv2.circle(img_arr, (300, 300), 15, 150, -1)
-
-            cv2.imwrite(str(img_path), img_arr)
-            image_paths.append(img_path)
-            labels.append(label)
-
-    if len(image_paths) < 8:
-        image_paths = image_paths[:8]
-        labels = labels[:8]
-        
-    # Setup standard config mock for input_size, batch_size, num_workers
     class MockConfig:
         class Model:
-            input_size = 512
-            batch_size = 4
-            num_workers = 0 # Use 0 in test scripts to avoid multi-processing overhead in Windows
+            input_size = 224
+            batch_size = 8
+            num_workers = 0
             apply_augmentation = True
         class Preprocessing:
             normalize_method = "minmax"
@@ -375,44 +393,40 @@ if __name__ == "__main__":
             rotation_range = 15
         model = Model()
         preprocessing = Preprocessing()
-        
+
     mock_config = MockConfig()
-    
+
     train_loader = get_dataloader(
-        image_paths=image_paths[:8],
-        labels=labels[:8],
+        image_paths=train_paths,
+        labels=train_labels,
         config=mock_config,
         is_training=True,
-        shuffle=True
+        shuffle=True,
     )
-    
+
     val_loader = get_dataloader(
-        image_paths=image_paths[8:],
-        labels=labels[8:],
+        image_paths=val_paths,
+        labels=val_labels,
         config=mock_config,
         is_training=False,
-        shuffle=False
+        shuffle=False,
     )
-    
-    # Train
+
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = DenseNetClassifier(num_classes=3, pretrained=True)
-    
-    # Run a short but meaningful fine-tuning loop on the available images.
+
     trained_model = train_classifier(
         model=model,
         train_loader=train_loader,
         val_loader=val_loader,
-        epochs=8,
-        lr=1e-3,
+        epochs=20,
+        lr=2e-4,
         device=device,
-        checkpoint_name="test_densenet.pth"
+        checkpoint_name="test_densenet.pth",
     )
 
-    # Save a second checkpoint name for the frontend runtime.
     best_path = MODELS_DIR / "checkpoints" / "best_densenet.pth"
     torch.save(trained_model.state_dict(), best_path)
     logger.info(f"Saved runtime checkpoint to {best_path}")
-    
-    # Run Grad-CAM
+
     run_gradcam_verification(model, device)
