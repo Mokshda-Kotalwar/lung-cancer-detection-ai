@@ -596,3 +596,22 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2026-07-16 18:20:04,632 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth
 2026-07-16 18:20:21,825 - __main__ - INFO - Launching Streamlit web interface...
 2026-07-16 18:22:12,798 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-16 18:30:50,976 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
+2026-07-16 18:30:50,983 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-16 18:30:51,117 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth
+2026-07-16 18:30:54,186 - __main__ - INFO - Launching Streamlit web interface...
+2026-07-16 18:31:39,149 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-16 18:35:51,381 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
+2026-07-16 18:35:51,391 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-16 18:35:51,545 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth
+2026-07-16 18:36:28,550 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
+2026-07-16 18:36:28,556 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-16 18:36:28,694 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth
+2026-07-16 18:36:37,169 - __main__ - INFO - Launching Streamlit web interface...
+2026-07-16 18:55:17,028 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
+2026-07-16 18:55:17,037 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-16 18:55:17,172 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth
+2026-07-16 18:55:17,578 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
+2026-07-16 18:55:17,586 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-16 18:55:17,666 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth
+2026-07-16 18:55:38,676 - __main__ - INFO - Launching Streamlit web interface...
