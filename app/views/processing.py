@@ -19,7 +19,6 @@ def render_processing(token):
         st.rerun()
         return
 
-    st.markdown('<div class="premium-card">', unsafe_allow_html=True)
     
     progress_bar = st.progress(0)
     status_text = st.empty()
@@ -104,4 +103,3 @@ def render_processing(token):
                 st.session_state["active_view"] = "Upload CT Scan"
                 st.rerun()
 
-    st.markdown('</div>', unsafe_allow_html=True)

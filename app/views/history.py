@@ -10,10 +10,8 @@ def render_history(token):
     
     history_data = get_patient_history(token)
     
-    st.markdown('<div class="premium-card">', unsafe_allow_html=True)
     if not history_data:
         st.info("No prediction history found. Upload a scan to generate your first prediction.")
-        st.markdown('</div>', unsafe_allow_html=True)
         return
         
     df = pd.DataFrame(history_data)
@@ -43,4 +41,3 @@ def render_history(token):
         use_container_width=True,
         hide_index=True,
     )
-    st.markdown('</div>', unsafe_allow_html=True)

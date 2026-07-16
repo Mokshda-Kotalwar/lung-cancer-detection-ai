@@ -18,7 +18,6 @@ def render_login():
     col1, col2, col3 = st.columns([1, 1.2, 1])
     
     with col2:
-        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
         st.markdown("<h3 style='text-align: center; margin-bottom: 30px;'>Sign in to your account</h3>", unsafe_allow_html=True)
         
         email = st.text_input("Email Address", placeholder="dr.smith@hospital.org")
@@ -48,4 +47,3 @@ def render_login():
                 st.warning("Please enter both email and password.")
                     
         st.markdown("<p style='text-align: center; margin-top: 20px; color: #64748b;'>Don't have an account? <a href='#' style='color: #3b82f6; text-decoration: none;'>Request access</a></p>", unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)

@@ -24,7 +24,6 @@ def render_results(token):
     col_left, col_right = st.columns([1, 1.2])
     
     with col_left:
-        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
         st.markdown("<h4 style='color: #1e3a8a; margin-bottom: 15px;'>Imaging Analysis</h4>", unsafe_allow_html=True)
         
         tab1, tab2 = st.tabs(["Original Scan", "Grad-CAM Overlay"])
@@ -39,7 +38,6 @@ def render_results(token):
             else:
                 st.warning("Grad-CAM image not available.")
                 
-        st.markdown('</div>', unsafe_allow_html=True)
         
     with col_right:
         pred_class = pred_data.get("prediction", "N/A")
@@ -48,21 +46,15 @@ def render_results(token):
         risk_score = pred_data.get("risk_score", 0.0)
         
         # We can use the gauge for risk score
-        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
         st.plotly_chart(create_risk_gauge(risk_score, r_level), use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
         
-        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
         st.markdown("#### Class Probabilities")
         probs = pred_data.get("probabilities", {})
         if probs:
             st.plotly_chart(create_probabilities_bar_chart(probs), use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
             
-        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
         st.markdown("<h4 style='color: #1e3a8a; margin-bottom: 10px;'>Clinical Recommendation</h4>", unsafe_allow_html=True)
         st.write(pred_data.get('recommendation', 'Consult with a senior radiologist.'))
-        st.markdown('</div>', unsafe_allow_html=True)
         
         # Report Generation
         if "pdf_report" not in st.session_state:

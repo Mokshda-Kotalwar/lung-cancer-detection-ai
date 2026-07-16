@@ -45,17 +45,13 @@ def render_analytics(token):
     col_l, col_r = st.columns([2, 1])
     
     with col_l:
-        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
         # Mock Data for Trends
         dates = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']
         values = [120, 150, 180, 170, 210, 250, 194]
         st.plotly_chart(create_trend_chart(dates, values, "Monthly Predictions (Last 7 Months)"), use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
         
     with col_r:
-        st.markdown('<div class="premium-card">', unsafe_allow_html=True)
         # Mock Data for Distribution
         labels = ["Benign", "Malignant", "Uncertain"]
         values = [850, 314, 120]
         st.plotly_chart(create_distribution_donut(labels, values, "Diagnosis Distribution"), use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)

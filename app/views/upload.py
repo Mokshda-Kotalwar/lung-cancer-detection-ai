@@ -23,7 +23,6 @@ def render_upload(token):
             "study_date": datetime.now()
         }
 
-    st.markdown('<div class="premium-card">', unsafe_allow_html=True)
     st.markdown("<h4 style='color: #1e3a8a; margin-bottom: 20px;'>Patient Information</h4>", unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
@@ -43,9 +42,7 @@ def render_upload(token):
         "gender": gender, "smoker": smoker, "study_date": study_date
     }
     
-    st.markdown('</div>', unsafe_allow_html=True)
     
-    st.markdown('<div class="premium-card">', unsafe_allow_html=True)
     st.markdown("<h4 style='color: #1e3a8a; margin-bottom: 20px;'>Medical Image Upload</h4>", unsafe_allow_html=True)
     
     uploaded_file = st.file_uploader("Drag and drop DICOM, PNG, or JPEG", type=["png", "jpg", "jpeg", "dcm"])
@@ -66,4 +63,3 @@ def render_upload(token):
                 st.session_state["active_view"] = "Processing"
                 st.rerun()
                 
-    st.markdown('</div>', unsafe_allow_html=True)

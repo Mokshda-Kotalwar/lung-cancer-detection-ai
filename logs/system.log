@@ -590,3 +590,9 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2026-07-12 20:57:53,054 - __main__ - INFO - Launching Streamlit web interface...
 2026-07-12 20:59:14,738 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
 2026-07-12 21:00:01,722 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-16 18:11:47,311 - __main__ - INFO - Launching Streamlit web interface...
+2026-07-16 18:20:04,485 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
+2026-07-16 18:20:04,491 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-16 18:20:04,632 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth
+2026-07-16 18:20:21,825 - __main__ - INFO - Launching Streamlit web interface...
+2026-07-16 18:22:12,798 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
