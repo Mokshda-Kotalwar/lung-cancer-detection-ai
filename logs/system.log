@@ -615,3 +615,17 @@ AttributeError: module 'bcrypt' has no attribute '__about__'
 2026-07-16 18:55:17,586 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
 2026-07-16 18:55:17,666 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth
 2026-07-16 18:55:38,676 - __main__ - INFO - Launching Streamlit web interface...
+2026-07-16 19:05:04,190 - src.models.classifier - INFO - Loaded pretrained DenseNet121 backbone using DenseNet121_Weights.DEFAULT
+2026-07-16 19:05:04,196 - src.models.classifier - INFO - Custom classifier head initialized for 3 classes
+2026-07-16 19:05:04,316 - backend.ml.predictor - INFO - Loaded model weights from C:\Users\Admin\Documents\lung-cancer-detection-ai\models\checkpoints\best_densenet.pth
+2026-07-16 19:05:16,620 - __main__ - INFO - Launching Streamlit web interface...
+2026-07-16 19:07:42,967 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-16 19:08:05,536 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-16 19:08:10,990 - src.reporting - INFO - ReportLab loaded successfully
+2026-07-16 19:08:12,737 - src.reporting - INFO - PDF report generated: C:\Users\Admin\AppData\Local\Temp\tmp6s_12el_.pdf
+2026-07-16 19:08:15,621 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-16 19:08:20,899 - src.reporting - INFO - ReportLab loaded successfully
+2026-07-16 19:08:22,487 - src.reporting - INFO - PDF report generated: C:\Users\Admin\AppData\Local\Temp\tmpmkm00fbk.pdf
+2026-07-16 19:08:25,452 - src.xai - INFO - Registered hooks for layer: backbone.features.norm5
+2026-07-16 19:08:30,581 - src.reporting - INFO - ReportLab loaded successfully
+2026-07-16 19:08:32,125 - src.reporting - INFO - PDF report generated: C:\Users\Admin\AppData\Local\Temp\tmph37obo7n.pdf
