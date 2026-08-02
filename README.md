@@ -1,6 +1,7 @@
+ <div align="center">
 🫁 LungAI Diagnostics – AI-Powered Lung Cancer Detection System
 
- <div align="center">
+
 
 AI-Powered Clinical Decision Support System for Lung Cancer Detection using Deep Learning and Explainable AI
 
