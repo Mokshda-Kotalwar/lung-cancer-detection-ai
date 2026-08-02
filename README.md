@@ -47,11 +47,16 @@ Multi-Class Classification
 Confidence Score Prediction
 Real-Time Inference
 
+<img width="635" height="376" alt="image" src="https://github.com/user-attachments/assets/df5598f9-7cef-43bc-bd05-8e592c4647b8" />
+
 🔥 Explainable AI
 Grad-CAM Heatmap Generation
 Model Attention Visualization
 Region Highlighting
 Improved Prediction Transparency
+
+<img width="707" height="418" alt="image" src="https://github.com/user-attachments/assets/f05ce90b-41b3-4c45-9978-b9f682be4796" />
+
 
 📊 Clinical Dashboard
 Patient Statistics
@@ -60,6 +65,9 @@ Scan History
 Risk Distribution
 Interactive Charts
 Model Prediction Summary
+
+<img width="958" height="437" alt="image" src="https://github.com/user-attachments/assets/6fb0fad3-6fb6-4075-8727-98d89e367f93" />
+
 
 📄 Report Generation
 Professional PDF Report
@@ -82,6 +90,9 @@ Secure Login
 Password Hashing using bcrypt
 Protected API Routes
 User Authentication
+
+<img width="412" height="433" alt="image" src="https://github.com/user-attachments/assets/93fbf024-3949-4259-b03a-1fbbe66de640" />
+
 
 🏗️ System Architecture
                   Lung CT Scan
@@ -703,19 +714,7 @@ This project was collaboratively developed as an academic and research initiativ
 
 **Tanaya Agrawal**
 
-- AI Model Development
-- Deep Learning
-- Streamlit Dashboard
-- Documentation
-- Testing
-
 **Mokshda Kotalwar**
-
-- FastAPI Backend
-- MongoDB Integration
-- API Development
-- Authentication
-- System Integration
 
 ---
 
@@ -734,10 +733,6 @@ Key resources include:
 
 ---
 
-# 🙏 Acknowledgements
-
-The authors would like to acknowledge the contributions of the open-source community whose datasets, frameworks, and research have made this project possible.
-
 Special thanks to:
 
 - Lung Image Database Consortium (LIDC-IDRI)
@@ -748,13 +743,6 @@ Special thanks to:
 - OpenCV Community
 - Scikit-learn Developers
 
----
-
-# 📜 License
-
-This project is licensed under the **MIT License**.
-
-You are free to use, modify, and distribute this project for educational and research purposes under the terms of the license.
 
 ---
 
