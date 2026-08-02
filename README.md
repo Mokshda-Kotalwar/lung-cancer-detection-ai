@@ -1,403 +1,803 @@
-# 🫁 LungAI Diagnostics – AI-Powered Lung Cancer Detection System
+                                                                        🫁 LungAI Diagnostics – AI-Powered Lung Cancer Detection System
 
-LungAI Diagnostics is an end-to-end AI-powered web application designed to assist healthcare professionals in the early detection of lung cancer using CT scan images. The platform combines state-of-the-art deep learning with explainable AI techniques to provide accurate predictions, visual interpretations, comprehensive diagnostic reports, and an interactive clinical dashboard.
+AI-Powered Clinical Decision Support System for Lung Cancer Detection using Deep Learning and Explainable AI
 
-The system streamlines the complete diagnostic workflow—from CT scan upload and preprocessing to AI-based prediction, Grad-CAM visualization, patient history management, and automated PDF report generation—through a modern and user-friendly interface.
----
+📖 Overview
 
-## 📌 Project Overview
+LungAI Diagnostics is an end-to-end Artificial Intelligence powered web application that assists healthcare professionals in the early detection of lung cancer from CT scan images.
 
-LungAI Diagnostics is designed to assist radiologists and healthcare professionals by providing fast, accurate, and explainable AI-based diagnosis of lung CT scans.
+The project combines Deep Learning, Explainable AI (XAI), and a modern web application to provide fast, interpretable, and user-friendly diagnostic support.
 
-The platform performs:
+Unlike traditional classification systems, LungAI Diagnostics not only predicts the likelihood of lung abnormalities but also explains the model's decisions using Grad-CAM visualizations, helping improve transparency and trust.
 
-* CT Scan Upload & Analysis
-* AI-based Lung Cancer Classification
-* Risk Score & Risk Level Prediction
-* Explainable AI using Grad-CAM
-* Professional PDF Report Generation
-* Patient History Management
-* Clinical Dashboard & Analytics
-* Secure Authentication System
+The application integrates:
 
----
+🫁 CT Scan Analysis
+🤖 Deep Learning Prediction
+🔥 Explainable AI (Grad-CAM)
+📊 Clinical Dashboard
+📄 Automated PDF Report Generation
+📚 Patient History Management
+🔐 Secure Authentication
+⚡ FastAPI Backend
+🌐 Streamlit Frontend
 
-# 🚀 Features
+Disclaimer: This project is developed for educational and research purposes only. It is not intended for clinical use or medical diagnosis.
 
-### 🔐 Authentication
+🎯 Problem Statement
 
-* User Registration
-* Secure Login using JWT Authentication
-* Password Hashing using bcrypt
-* Role-Based User Management
+Lung cancer remains one of the leading causes of cancer-related deaths worldwide. Early diagnosis significantly improves survival rates, but manual interpretation of CT scans is time-consuming and requires experienced radiologists.
 
-### 🫁 AI Diagnosis
+LungAI Diagnostics aims to assist healthcare professionals by providing an AI-assisted decision support system capable of:
 
-* Upload CT Scan Images
-* Automatic Image Preprocessing
-* Deep Learning Prediction
-* Multi-class Classification
-* Confidence Score Estimation
+Detecting lung abnormalities from CT scans
+Predicting diagnostic categories
+Providing confidence scores
+Highlighting important image regions using Explainable AI
+Maintaining patient records
+Generating diagnostic reports automatically
 
-### 📊 Explainable AI
+🚀 Features
 
-* Grad-CAM Heatmap Generation
-* Visual Attention Mapping
-* Lesion Localization
+🫁 AI-Based Diagnosis
+Upload Lung CT Scan Images
+Automatic Image Preprocessing
+DenseNet121-based Deep Learning Model
+Multi-Class Classification
+Confidence Score Prediction
+Real-Time Inference
 
-### 📈 Clinical Dashboard
+🔥 Explainable AI
+Grad-CAM Heatmap Generation
+Model Attention Visualization
+Region Highlighting
+Improved Prediction Transparency
 
-* Patient Statistics
-* Scan History
-* Prediction Distribution
-* Risk Analytics
-* Interactive Charts
+📊 Clinical Dashboard
+Patient Statistics
+Prediction Analytics
+Scan History
+Risk Distribution
+Interactive Charts
+Model Prediction Summary
 
-### 📄 Report Generation
+📄 Report Generation
+Professional PDF Report
+Patient Details
+Prediction Summary
+Confidence Scores
+Grad-CAM Visualization
+Downloadable Reports
 
-* AI Diagnostic Report
-* Patient Information
-* Prediction Summary
-* Risk Assessment
-* Grad-CAM Visualization
-* PDF Export
+📚 Patient Management
+Patient History
+Search Records
+Previous Predictions
+Report Storage
+History Analytics
 
-### 📚 Patient History
+🔐 Authentication & Security
+JWT Authentication
+Secure Login
+Password Hashing using bcrypt
+Protected API Routes
+User Authentication
 
-* Previous Diagnoses
-* Searchable Records
-* Historical Predictions
-
----
-
-# 🏗️ System Architecture
-
-```
-                CT Scan Upload
-                       │
-                       ▼
-            Image Preprocessing
-                       │
-                       ▼
-              Deep Learning Model
-                       │
-      ┌────────────────┴───────────────┐
-      ▼                                ▼
- Prediction                     Grad-CAM Generation
-      ▼                                ▼
- Risk Assessment               Explainability
-      └──────────────┬─────────────────┘
-                     ▼
-          Report Generation
-                     ▼
-        Dashboard & Patient History
-```
-
----
-
-# 🧠 Deep Learning Model
-
-The system uses a transfer learning approach with an EfficientNet-based architecture fine-tuned on lung CT scan images.
-
-### Model Pipeline
-
-```
-CT Image
-    │
-Resize (512×512)
-    │
+🏗️ System Architecture
+                  Lung CT Scan
+                        │
+                        ▼
+              Image Preprocessing
+                        │
+                        ▼
+             DenseNet121 Classifier
+                        │
+          ┌─────────────┴─────────────┐
+          ▼                           ▼
+   Prediction Result            Grad-CAM
+          │                           │
+          └─────────────┬─────────────┘
+                        ▼
+                Risk Assessment
+                        │
+                        ▼
+              PDF Report Generation
+                        │
+                        ▼
+             Dashboard & Patient History
+             
+🧠 AI Model Pipeline
+Input CT Scan
+      │
+      ▼
+Resize Image
+      │
+      ▼
 Normalization
-    │
-Data Augmentation
-    │
-EfficientNet Backbone
-    │
+      │
+      ▼
+Contrast Enhancement
+      │
+      ▼
+DenseNet121 Feature Extraction
+      │
+      ▼
 Global Average Pooling
-    │
-Fully Connected Layers
-    │
-Softmax Classifier
-```
+      │
+      ▼
+Fully Connected Layer
+      │
+      ▼
+Softmax Classification
+      │
+      ▼
+Prediction
 
----
+🧠 Deep Learning Model
 
-# 📂 Dataset
+The prediction engine is built using DenseNet121, a convolutional neural network known for efficient feature reuse and strong performance in medical image analysis.
 
-The model is trained on a publicly available lung CT scan dataset containing multiple diagnostic categories.
+Why DenseNet121?
+Transfer Learning
+Efficient Feature Propagation
+Reduced Overfitting
+High Performance on Medical Images
+Faster Training
+Lightweight Compared to Larger CNNs
 
-### Dataset Classes
+📂 Dataset
 
-* Normal
-* Benign
-* Malignant
+The model is trained and evaluated using the **LIDC-IDRI (Lung Image Database Consortium and Image Database Resource Initiative)** dataset, one of the most widely used public datasets for lung nodule analysis and lung cancer research.
 
----
+The dataset contains thoracic CT scans with expert radiologist annotations, making it suitable for developing and evaluating AI models for lung cancer detection.
 
-# 🖼️ Image Preprocessing
+### Dataset Information
+
+- **Dataset:** LIDC-IDRI
+- **Modality:** Computed Tomography (CT)
+- **Image Format:** DICOM
+- **Annotations:** Lung nodules annotated by up to four experienced thoracic radiologists
+- **Application:** Lung Nodule Detection and Classification
+
+### Target Classes
+
+- Normal
+- Benign
+- Malignant
+
+> **Note:** CT scans undergo preprocessing and image enhancement before being used for inference by the DenseNet121 classification model.
 
 The preprocessing pipeline includes:
 
-* CT Image Loading
-* Image Resizing (512×512)
-* Pixel Normalization
-* Contrast Enhancement
-* CLAHE (Contrast Limited Adaptive Histogram Equalization)
-* Intensity Windowing
-* Tensor Conversion
+Image Loading
+Image Resizing
+Pixel Normalization
+CLAHE Enhancement
+Contrast Improvement
+Tensor Conversion
+🔬 Data Augmentation
+
+To improve generalization, the following augmentation techniques are used:
+
+Horizontal Flip
+Random Rotation
+Random Brightness
+Random Contrast
+Random Crop
+Translation
+Normalization
+
+# 📊 Explainable AI (Grad-CAM)
+
+Understanding why an AI model makes a particular prediction is essential in medical imaging. LungAI Diagnostics integrates **Gradient-weighted Class Activation Mapping (Grad-CAM)** to provide visual explanations for model predictions.
+
+Grad-CAM highlights the regions of the CT scan that contribute most to the model's decision, helping users better interpret the classification results.
+
+### Features
+
+- 🔥 Heatmap Generation
+- 🫁 Lung Region Localization
+- 🎯 Prediction Interpretation
+- 📈 Improved Model Transparency
+- 👨‍⚕️ Decision Support for Healthcare Professionals
+
+> **Note:** Grad-CAM is intended to improve model interpretability and should not be considered a substitute for clinical expertise.
 
 ---
 
-# 🔬 Data Augmentation
+# 📊 Dashboard
 
-To improve model generalization:
+The Streamlit dashboard provides an intuitive interface for interacting with the AI model and managing patient records.
 
-* Horizontal Flip
-* Random Rotation
-* Random Brightness
-* Random Contrast
-* Zoom
-* Translation
-* Random Cropping
+## Dashboard Modules
 
----
+### 🏠 Home Dashboard
 
-# 🧠 Explainable AI
-
-The system incorporates **Grad-CAM** to visualize the regions influencing model predictions.
-
-Benefits:
-
-* Improves transparency
-* Enhances clinician trust
-* Localizes suspicious lung regions
-* Supports clinical decision making
+- Overall Statistics
+- Recent Predictions
+- Prediction Distribution
+- Risk Analytics
+- Interactive Charts
 
 ---
 
-# 📊 Model Performance
+### 📤 CT Scan Upload
 
-| Metric    | Score     |
-| --------- | --------- |
-| Accuracy  | **98.7%** |
-| Precision | **98.4%** |
-| Recall    | **98.5%** |
-| F1 Score  | **98.4%** |
-| ROC-AUC   | **99.1%** |
+- Upload CT Scan Images
+- Automatic Preprocessing
+- One-click Prediction
+- Image Preview
 
 ---
 
-# 📉 Confusion Matrix Summary
+### 🤖 Prediction Results
 
-| Actual / Predicted | Normal | Benign | Malignant |
-| ------------------ | ------ | ------ | --------- |
-| Normal             | 98     | 1      | 1         |
-| Benign             | 2      | 96     | 2         |
-| Malignant          | 1      | 2      | 97        |
+After inference, the dashboard displays:
+
+- Predicted Class
+- Confidence Score
+- Risk Level
+- Grad-CAM Visualization
+- Clinical Summary
 
 ---
 
-# ⚙️ Tech Stack
+### 📄 AI Report
 
-## Frontend
+The generated PDF report includes:
 
-* Streamlit
-* HTML
-* CSS
-* Plotly
-* Pillow
+- Patient Information
+- Prediction Results
+- Confidence Scores
+- Grad-CAM Heatmap
+- Date & Time
+- AI Summary
+
+---
+
+### 📚 Patient History
+
+The dashboard securely stores previous predictions for future reference.
+
+Features include:
+
+- Search Records
+- View Previous Reports
+- Download Reports
+- Prediction Timeline
+
+---
+
+# ⚙️ Technology Stack
+
+## Programming Language
+
+- Python 3.10
+
+---
+
+## Deep Learning
+
+- PyTorch
+- Torchvision
+- DenseNet121
+- Grad-CAM
+
+---
+
+## Computer Vision
+
+- OpenCV
+- Pillow
+- NumPy
 
 ---
 
 ## Backend
 
-* FastAPI
-* Uvicorn
-* Python
+- FastAPI
+- Uvicorn
+- Pydantic
 
 ---
 
-## Machine Learning
+## Frontend
 
-* PyTorch
-* Torchvision
-* EfficientNet
-* Grad-CAM
-* NumPy
-* OpenCV
-* Scikit-learn
+- Streamlit
+- Plotly
 
 ---
 
 ## Database
 
-* MongoDB
-* Motor (Async MongoDB Driver)
+- MongoDB
+- Motor (Async MongoDB Driver)
 
 ---
 
 ## Authentication
 
-* JWT Authentication
-* OAuth2
-* bcrypt
-* Passlib
-* Python-JOSE
+- JWT Authentication
+- OAuth2
+- Passlib
+- bcrypt
 
 ---
 
-## Reporting
+## Report Generation
 
-* ReportLab
-* PDF Generation
+- ReportLab
 
 ---
 
-## Deployment
+## Development Tools
 
-* Render
-* Docker
-* GitHub
+- Git
+- GitHub
+- VS Code
+- Docker (Optional)
 
 ---
 
 # 📁 Project Structure
 
-```
+```text
 lung-cancer-detection-ai/
 │
-├── app/
+├── app/                    # Streamlit Frontend
 │   ├── components/
+│   ├── pages/
 │   ├── utils/
-│   ├── views/
-│   ├── assets/
 │   └── main.py
 │
-├── backend/
+├── backend/                # FastAPI Backend
 │   ├── api/
 │   ├── core/
-│   ├── database.py
-│   ├── ml/
+│   ├── database/
 │   ├── models/
+│   ├── services/
 │   └── main.py
 │
-├── models/
+├── models/                 # Trained DenseNet121 Model
 │
-├── reports/
+├── data/                   # Dataset & Preprocessing
 │
-├── config.py
+├── outputs/                # Predictions & Reports
+│
+├── docs/                   # Documentation
 │
 ├── requirements.txt
-│
+├── Dockerfile
+├── docker-compose.yml
 └── README.md
 ```
 
 ---
 
-# 🔄 Workflow
+# 🚀 Installation
 
-```
-User Login
-      │
-      ▼
-Upload CT Scan
-      │
-      ▼
-Image Preprocessing
-      │
-      ▼
-AI Prediction
-      │
-      ▼
-Risk Assessment
-      │
-      ▼
-Grad-CAM Generation
-      │
-      ▼
-PDF Report Generation
-      │
-      ▼
-Patient History Storage
-      │
-      ▼
-Dashboard Analytics
-```
+## Clone Repository
 
+```bash
+git clone https://github.com/<your-username>/lung-cancer-detection-ai.git
 
-# 📊 API Endpoints
-
-### Authentication
-
-```
-POST /auth/signup
-
-POST /auth/login
-```
-
-### Prediction
-
-```
-POST /predict/
-
-POST /predict/report
-```
-
-### History
-
-```
-GET /history/
-
-DELETE /history/{id}
-```
-
-### Health
-
-```
-GET /health/
+cd lung-cancer-detection-ai
 ```
 
 ---
 
-# 🔐 Security Features
+## Create Virtual Environment
 
-* JWT Authentication
-* Password Hashing
-* OAuth2 Authorization
-* Secure API Communication
-* Role-Based Access Control
-* Protected Routes
+### Windows
 
----
+```bash
+python -m venv venv
 
-# 🌟 Future Enhancements
+venv\Scripts\activate
+```
 
-* DICOM Viewer Integration
-* Multi-Slice CT Analysis
-* 3D Lung Reconstruction
-* AI Chat Assistant for Clinical Insights
-* Multi-Hospital Support
-* PACS Integration
-* Cloud Deployment
-* Email Report Delivery
-* Multi-Language Support
-* Real-Time Monitoring Dashboard
+### Linux / macOS
+
+```bash
+python3 -m venv venv
+
+source venv/bin/activate
+```
 
 ---
 
-# 👥 Team
+## Install Dependencies
 
-**Project:** LungAI Diagnostics – AI-Powered Lung Cancer Detection System
-
-Developed as an AI-assisted clinical decision support platform using Deep Learning, Explainable AI, FastAPI, Streamlit, and MongoDB.
-
----
-
-# 📄 License
-
-This project is intended for **educational, research, and demonstration purposes**. It is **not certified for clinical or medical diagnosis** and should not be used as a substitute for professional medical judgment.
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
-## ⭐ Acknowledgement
+## Configure Environment Variables
 
-Special thanks to the open-source AI and healthcare communities whose datasets, frameworks, and research have enabled the development of this project. This work combines modern deep learning techniques with explainable AI to support early lung cancer detection and improve clinical decision-making.
+Create a `.env` file in the project root.
+
+Example:
+
+```env
+MONGODB_URL=mongodb://localhost:27017
+DATABASE_NAME=lung_cancer_db
+SECRET_KEY=your_secret_key
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+```
+
+---
+
+# ▶️ Running the Project
+
+## Start MongoDB
+
+Ensure MongoDB is running locally or provide a cloud MongoDB URI.
+
+---
+
+## Start Backend
+
+```bash
+cd backend
+
+uvicorn main:app --reload
+```
+
+Backend URL
+
+```
+http://127.0.0.1:8000
+```
+
+---
+
+## Start Streamlit Dashboard
+
+```bash
+streamlit run app/main.py
+```
+
+Dashboard URL
+
+```
+http://localhost:8501
+```
+
+---
+
+# 📡 API Endpoints
+
+## Authentication
+
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| POST | `/auth/signup` | Register User |
+| POST | `/auth/login` | Login |
+
+---
+
+## Prediction
+
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| POST | `/predict` | Predict CT Scan |
+| POST | `/predict/report` | Generate PDF Report |
+
+---
+
+## History
+
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| GET | `/history` | View Patient History |
+| DELETE | `/history/{id}` | Delete Record |
+
+---
+
+## Health
+
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| GET | `/health` | API Health Check |
+
+---
+
+# 🖼️ Application Preview
+
+> Add screenshots after uploading them to GitHub.
+
+### Login Page
+
+```
+docs/images/login.png
+```
+
+### Dashboard
+
+```
+docs/images/dashboard.png
+```
+
+### Prediction Page
+
+```
+docs/images/prediction.png
+```
+
+### Grad-CAM Result
+
+```
+docs/images/gradcam.png
+```
+
+### PDF Report
+
+```
+docs/images/report.png
+```
+
+# 🔄 System Workflow
+
+The following workflow illustrates how LungAI Diagnostics processes a CT scan from upload to report generation.
+
+```text
+                 User Login
+                     │
+                     ▼
+             Upload CT Scan
+                     │
+                     ▼
+          Image Preprocessing
+                     │
+                     ▼
+      DenseNet121 Classification
+                     │
+          ┌──────────┴──────────┐
+          ▼                     ▼
+   Prediction Result      Grad-CAM Heatmap
+          │                     │
+          └──────────┬──────────┘
+                     ▼
+            Risk Assessment
+                     │
+                     ▼
+        PDF Report Generation
+                     │
+                     ▼
+      Store Patient History (MongoDB)
+                     │
+                     ▼
+      Dashboard Analytics & Visualization
+```
+
+---
+
+# 📈 Model Evaluation
+
+The primary objective of this project is to demonstrate an end-to-end AI-powered clinical decision support system for lung CT image analysis.
+
+The current implementation focuses on:
+
+- CT Scan Preprocessing
+- DenseNet121-based Image Classification
+- Explainable AI using Grad-CAM
+- FastAPI Backend Services
+- Streamlit Dashboard
+- MongoDB Integration
+- Automated PDF Report Generation
+
+### Evaluation Metrics
+
+The following evaluation metrics can be generated after training and testing the model:
+
+- Accuracy
+- Precision
+- Recall
+- F1-Score
+- ROC Curve
+- AUC Score
+- Confusion Matrix
+
+> **Note:** The reported prediction should be interpreted as an AI-assisted result and **not as a confirmed medical diagnosis**.
+
+---
+
+# 🔒 Security Features
+
+LungAI Diagnostics incorporates several security mechanisms to protect user information and application resources.
+
+- JWT Authentication
+- OAuth2 Authorization
+- Password Hashing using bcrypt
+- Protected API Endpoints
+- Secure User Authentication
+- Environment Variable Configuration
+- Role-Based Access Support (Future Enhancement)
+
+---
+
+# 🚀 Future Enhancements
+
+Several improvements can further enhance the capabilities of LungAI Diagnostics.
+
+### AI & Deep Learning
+
+- Multi-class Disease Classification
+- Multi-Slice CT Analysis
+- 3D Lung Nodule Detection
+- Segmentation using U-Net
+- Ensemble Deep Learning Models
+- Vision Transformer Integration
+- Improved Explainable AI Techniques
+
+---
+
+### Clinical Features
+
+- DICOM Viewer Integration
+- PACS Integration
+- Electronic Health Record (EHR) Support
+- Multi-Hospital Deployment
+- Doctor Dashboard
+- Patient Portal
+- Clinical Decision Support
+
+---
+
+### Platform Features
+
+- Cloud Deployment
+- Docker & Kubernetes Support
+- Email Report Delivery
+- Multi-language Support
+- Mobile Application
+- Dark Mode Interface
+- Real-time Notifications
+
+---
+
+# 💻 Development Highlights
+
+This project demonstrates practical implementation of several modern AI and software engineering concepts.
+
+### Machine Learning
+
+- Transfer Learning
+- DenseNet121
+- Image Classification
+- Data Augmentation
+- Explainable AI
+
+### Backend Development
+
+- REST API Development
+- FastAPI
+- Authentication
+- MongoDB Integration
+
+### Frontend
+
+- Streamlit Dashboard
+- Interactive Charts
+- Clinical Visualization
+- Responsive Interface
+
+### Software Engineering
+
+- Modular Project Structure
+- API Integration
+- Version Control using Git
+- Documentation
+- Report Generation
+
+---
+
+# 🤝 Contributors
+
+This project was collaboratively developed as an academic and research initiative.
+
+## Contributors
+
+**Tanaya Agrawal**
+
+- AI Model Development
+- Deep Learning
+- Streamlit Dashboard
+- Documentation
+- Testing
+
+**Mokshda Kotalwar**
+
+- FastAPI Backend
+- MongoDB Integration
+- API Development
+- Authentication
+- System Integration
+
+---
+
+# 📚 References
+
+The development of this project was inspired by published research in deep learning, medical imaging, and explainable artificial intelligence.
+
+Key resources include:
+
+- LIDC-IDRI Dataset
+- PyTorch Documentation
+- FastAPI Documentation
+- Streamlit Documentation
+- MongoDB Documentation
+- Grad-CAM Research Paper
+
+---
+
+# 🙏 Acknowledgements
+
+The authors would like to acknowledge the contributions of the open-source community whose datasets, frameworks, and research have made this project possible.
+
+Special thanks to:
+
+- Lung Image Database Consortium (LIDC-IDRI)
+- PyTorch Community
+- FastAPI Community
+- Streamlit Community
+- MongoDB Team
+- OpenCV Community
+- Scikit-learn Developers
+
+---
+
+# 📜 License
+
+This project is licensed under the **MIT License**.
+
+You are free to use, modify, and distribute this project for educational and research purposes under the terms of the license.
+
+---
+
+# ⚠️ Medical Disclaimer
+
+LungAI Diagnostics is an **AI-assisted clinical decision support system** developed solely for educational, research, and demonstration purposes.
+
+The predictions generated by this application should **not** be interpreted as professional medical advice, diagnosis, or treatment recommendations.
+
+Healthcare professionals should always rely on comprehensive clinical evaluation, radiological expertise, and established medical protocols before making diagnostic or treatment decisions.
+
+The developers assume no responsibility for clinical decisions made using this software.
+
+---
+
+# ⭐ Support
+
+If you found this project useful, please consider:
+
+⭐ Starring this repository
+
+🍴 Forking the repository
+
+🛠️ Contributing improvements
+
+📢 Sharing it with the AI and Healthcare community
+
+---
+
+# 📬 Contact
+
+For questions, suggestions, or collaboration opportunities, feel free to connect through GitHub.
+
+---
+
+<div align="center">
+
+## 🫁 LungAI Diagnostics
+
+**AI-Powered Lung Cancer Detection using Deep Learning, Explainable AI, FastAPI, Streamlit, and MongoDB**
+
+**Developed for Educational, Research, and Demonstration Purposes**
+
+⭐ **If you like this project, don't forget to Star the Repository!**
+
+</div>
